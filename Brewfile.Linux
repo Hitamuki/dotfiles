@@ -1,0 +1,11 @@
+# Homebrew Linux
+
+brew "fish"
+brew "git"
+brew "git-flow"
+brew "mise"
+brew "starship"
+brew "tmux"
+brew "tree"
+brew "vim"
+

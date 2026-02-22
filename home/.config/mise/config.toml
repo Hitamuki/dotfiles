@@ -1,0 +1,9 @@
+[tools]
+aws = "latest"
+dotnet = "8.0.410"
+github-cli = "latest"
+mysql = "8.0.33"
+node = "lts"
+pnpm = "latest"
+python = "3.13.3"
+yarn = "4.1.1"

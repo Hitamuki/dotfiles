@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# ========================================================
+# OS設定の変更
+# OSレベルの設定（UI・キーボード・Finder・Desktopなど）を適用する
+# ========================================================
+
+set -e
+
+detect_os() {
+  case "$(uname -s)" in
+    Darwin) echo "mac" ;;
+    Linux) echo "linux" ;;
+  esac
+}
+
+OS=$(detect_os)
+
+echo "⚙️ Applying defaults for $OS"
+
+# --------------------
+# Fish shell setup
+# --------------------
+if command -v fish &> /dev/null; then
+  FISH_PATH=$(command -v fish)
+  
+  # /etc/shellsにfishが登録されているか確認
+  if ! grep -q "$FISH_PATH" /etc/shells 2>/dev/null; then
+    echo "🐟 Adding fish to /etc/shells..."
+    echo "$FISH_PATH" | sudo tee -a /etc/shells > /dev/null
+  fi
+  
+  # 現在のシェルがfishでない場合は変更
+  if [ "$SHELL" != "$FISH_PATH" ]; then
+    echo "🐟 Changing default shell to fish..."
+    chsh -s "$FISH_PATH"
+    echo "✅ Default shell changed to fish. Please restart your terminal."
+  else
+    echo "✅ Fish is already the default shell"
+  fi
+fi
+
+# --------------------
+# macOS defaults
+# --------------------
+if [ "$OS" = "mac" ]; then
+  # Finder: 隠しファイル表示
+  defaults write com.apple.finder AppleShowAllFiles -bool true
+
+  # キーリピート高速化
+  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+  # Finder 再起動
+  killall Finder || true
+fi
+
+# --------------------
+# Linux defaults
+# --------------------
+if [ "$OS" = "linux" ]; then
+  # GNOME: 日付表示
+  gsettings set org.gnome.desktop.interface clock-show-date true || true
+fi
+

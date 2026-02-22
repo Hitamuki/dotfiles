@@ -1,0 +1,79 @@
+{
+    // ===== エディターの見た目・フォント設定 =====
+    // "editor.fontFamily": "Ricty Diminished", // エディターのフォント
+    "editor.fontSize": 13, // エディターのフォントサイズ
+    "editor.renderWhitespace": "all", // 空白文字（スペース・タブなど）をすべて表示
+    "editor.wordWrap": "on", // テキストが横幅を超えたら自動で折り返す
+    "editor.suggestSelection": "first", // サジェストで最初の候補を選択状態にする
+    "editor.cursorBlinking": "expand", // カーソルの点滅アニメーション
+    "editor.cursorSmoothCaretAnimation": "on", // カーソル移動のアニメーション
+    "editor.cursorWidth": 3, // カーソルの太さ
+    "editor.minimap.enabled": false, // ミニマップ
+    "editor.guides.bracketPairs": true, // 対応する括弧をガイドラインで表示
+    "editor.renderLineHighlight": "line", // 行のハイライト
+    "editor.showFoldingControls": "always", // 折りたたみコントロール（▼）を常に表示
+    // "editor.smoothScrolling": true, // スクロールをスムーズに
+    // ===== エディターのカラー設定（テーマ補正など）=====
+    "workbench.colorCustomizations": {
+        "tab.activeBackground": "#555555cc", // アクティブなタブの背景色
+        "editor.selectionBackground": "#51d62550", // テキスト選択範囲の背景色
+        "editor.selectionHighlightBackground": "#44e96230", // 同じ文字列の選択以外のマッチ部分の背景色
+        "editor.findMatchBackground": "#ccffff80", // 検索にマッチした部分の背景色
+        "editor.findMatchHighlightBackground": "#a0cfcf70", // 検索マッチのうち選択以外の背景色
+    },
+    // ===== ターミナル関連 =====
+    "terminal.integrated.fontFamily": "Ricty Diminished", // ターミナルのフォント
+    "terminal.integrated.fontSize": 14, // ターミナルのフォントサイズ
+    "terminal.integrated.defaultProfile.osx": "fish", // macOSでのデフォルトターミナル
+    "terminal.integrated.env.osx": {
+        "Q_NEW_SESSION": "1"
+    }, // macOS用の統合ターミナルに渡す環境変数
+    "terminal.integrated.cursorStyle": "line", // ターミナルカーソルのスタイル
+    "terminal.integrated.customGlyphs": true, // カスタムグリフ（絵文字など）の描画
+    "terminal.integrated.enableImages": true, // VSCode全体のUIスケーリング
+    // "terminal.integrated.smoothScrolling": true, // ターミナルのスクロールをスムーズに
+    "window.zoomLevel": 1,
+    "workbench.editor.wrapTabs": true, // タブが多くなった時に折り返して表示
+    "workbench.editor.empty.hint": "hidden", // 空のエディターにヒントを表示しない
+    "workbench.view.alwaysShowHeaderActions": true, // ビューのヘッダーに常に操作ボタンを表示
+    "search.defaultViewMode": "tree", // 検索結果の表示形式
+    "search.showLineNumbers": true, // 検索結果に行番号を表示
+    // ===== Git 関連設定 =====
+    "git.autofetch": true, // 定期的にリモートリポジトリから自動フェッチする
+    "git.fetchOnPull": true, // pull 時に自動で fetch を実行
+    "git.autofetchPeriod": 300, // 自動 fetch の間隔
+    "git.pruneOnFetch": true, // フェッチ時に削除されたリモートブランチも削除する
+    "git.confirmSync": false, // Git同期時の確認ダイアログを表示しない
+    "git.openRepositoryInParentFolders": "never", // 親フォルダにあるリポジトリを自動で開かない
+    // ===== ソース管理 (SCM) 関連 =====
+    "scm.inputFontSize": 14, // ソース管理入力欄のフォントサイズ
+    "scm.diffDecorationsGutterWidth": 5, // 差分表示（左ガター）の幅
+    "scm.inputFontFamily": "editor", // コミットメッセージ入力欄のフォントをエディタと同じに
+    "scm.defaultViewMode": "tree", // ソース管理ビューのデフォルト表示
+    // ===== ファイル・フォルダ表示設定 =====
+    "files.exclude": {
+        // 表示対象のフォルダ
+        "**/.git": false
+    },
+    // ===== リモート・ポート転送関連 =====
+    "remote.autoForwardPortsSource": "hybrid", // 自動ポートフォワーディングの対象をハイブリッド（プロセスとパターン両方）
+    // ===== 差分エディタ設定 =====
+    "diffEditor.ignoreTrimWhitespace": false, // 差分比較で末尾の空白を無視しない
+    // ===== 言語別設定 =====
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features" // JSON with Comments (jsonc) ファイル
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml" // YAML ファイル
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    },
+    // ===== AI =====
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4",
+    "amazonQ.suppressPrompts": {
+        "amazonQChatPairProgramming": true
+    },
+    // ===== 未整理 =====
+}

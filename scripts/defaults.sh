@@ -51,6 +51,15 @@ if [ "$OS" = "mac" ]; then
   defaults write NSGlobalDomain KeyRepeat -int 1
   defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
+  # Nerd Fontインストール (Fira Code)
+  if ! brew list | grep -q "font-fira-code-nerd-font"; then
+    echo "🔤 Installing Fira Code Nerd Font..."
+    brew install font-fira-code-nerd-font
+    echo "✅ Fira Code Nerd Font installed"
+  else
+    echo "✅ Fira Code Nerd Font already installed"
+  fi
+
   # Finder 再起動
   killall Finder || true
 fi
@@ -61,5 +70,18 @@ fi
 if [ "$OS" = "linux" ]; then
   # GNOME: 日付表示
   gsettings set org.gnome.desktop.interface clock-show-date true || true
+
+  # Nerd Fontインストール (Fira Code)
+  if ! fc-list | grep -q "FiraCode Nerd Font"; then
+    echo "🔤 Installing Fira Code Nerd Font..."
+    mkdir -p ~/.fonts
+    curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip -o /tmp/FiraCode.zip
+    unzip /tmp/FiraCode.zip -d ~/.fonts
+    fc-cache -fv
+    rm /tmp/FiraCode.zip
+    echo "✅ Fira Code Nerd Font installed"
+  else
+    echo "✅ Fira Code Nerd Font already installed"
+  fi
 fi
 

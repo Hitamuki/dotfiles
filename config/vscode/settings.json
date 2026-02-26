@@ -22,9 +22,10 @@
         "editor.findMatchHighlightBackground": "#a0cfcf70", // 検索マッチのうち選択以外の背景色
     },
     // ===== ターミナル関連 =====
-    "terminal.integrated.fontFamily": "Ricty Diminished", // ターミナルのフォント
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font", // ターミナルのフォント（Ricty Diminished／FiraCode Nerd Font）
     "terminal.integrated.fontSize": 14, // ターミナルのフォントサイズ
     "terminal.integrated.defaultProfile.osx": "fish", // macOSでのデフォルトターミナル
+    "terminal.integrated.defaultProfile.linux": "fish", // Linuxでのデフォルトターミナル
     "terminal.integrated.env.osx": {
         "Q_NEW_SESSION": "1"
     }, // macOS用の統合ターミナルに渡す環境変数

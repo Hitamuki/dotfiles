@@ -13,8 +13,3 @@ truncation_length = 5
 truncation_symbol = ".../"
 truncate_to_repo = false
 read_only = " 󰌾" #鍵のicon
-
-[character]
-success_symbol = "[❯](green)"
-error_symbol = "[❯](red)"
-

@@ -1,7 +1,7 @@
 # dotfiles
 
-個人的な開発環境の設定ファイル集
-macOSとLinuxに対応
+- 個人的な開発環境の設定ファイル集
+- macOSとLinuxに対応
 
 ## 概要
 
@@ -98,4 +98,5 @@ make defaults
 ### 備考
 
 - iTerm2テーマ（`config/iterm2/themes/iceberg.itermcolors`）は手動でインポート
+- ターミナルのフォントは手動で設定する
 - デフォルトシェルは自動的にfishに変更される（`make defaults`実行時）

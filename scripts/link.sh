@@ -39,8 +39,14 @@ mkdir -p ~/.config/fish
 link "$DOTFILES_SRC/.config/fish/config.fish" ~/.config/fish/config.fish
 link "$DOTFILES_SRC/.config/fish/fish_plugins" ~/.config/fish/fish_plugins
 
-mkdir -p ~/.config/mise
-link "$DOTFILES_SRC/.config/mise/config.toml" ~/.config/mise/config.toml
+mkdir -p ~/.config/zsh
+link "$DOTFILES_SRC/.config/zsh/.zshrc" ~/.config/zsh/.zshrc
+link "$DOTFILES_SRC/.zshenv" ~/.zshenv
+
+mkdir -p ~/.config/sheldon
+link "$DOTFILES_SRC/.config/sheldon/plugins.toml" ~/.config/sheldon/plugins.toml
+
+link "$DOTFILES_SRC/.config/mise.toml" ~/.config/mise.toml
 
 link "$DOTFILES_SRC/.config/starship.toml" ~/.config/starship.toml
 

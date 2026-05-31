@@ -7,13 +7,12 @@
 
 このリポジトリには以下の設定が含まれる
 
-- シェル設定（Fish shell + Starship）
+- シェル関連（シェル：Zsh + Sheldon、Fish + Fisher、Starship）
 - ターミナルマルチプレクサ（tmux）
-- エディタ設定（Vim）
-- Git設定
+- エディタ（VSCode、Vim）
+- Git
 - パッケージ、アプリケーション管理（Homebrew）
 - パッケージバージョン管理（mise）
-- VSCode拡張機能
 
 ## セットアップ
 
@@ -22,11 +21,21 @@
 ```bash
 # リポジトリをクローン
 
+# 「home/.gitconfig」でGitのユーザー情報設定
+
 # すべてをセットアップ（macOS）
 make mac
 
 # すべてをセットアップ（Linux）
 make linux
+
+# ターミナルアプリの設定
+  # iTerm2のテーマ（`config/iterm2/themes/iceberg.itermcolors`）を手動でインポート
+    # iTerm2（Settings → Profiles → Colors → Color Preset
+  # ターミナルのフォントを手動で設定
+    # iTerm2（Settings → Profiles → Text → Font → 「Nerd Font」で検索
+  # 透明度
+    # iTerm2（Settings → Profiles → Window → Transparency：30）
 ```
 
 ### 個別セットアップ
@@ -44,39 +53,25 @@ make link
 make defaults
 ```
 
-## 含まれる設定
-
-### シェル環境
-
-- **Fish shell**: モダンで使いやすいシェル
-- **Starship**: カスタマイズ可能なプロンプト
-- **tmux**: セッション管理とペイン分割
-  - マウス操作対応
-  - セッションの自動保存・復元（tmux-resurrect/continuum）
-  - tmux-powerテーマ適用
-
-### 開発ツール
-
-- **mise**: 複数言語のランタイムバージョン管理ツール
-- **Git**: バージョン管理システム
-  - ユーザー情報設定
-- **Vim**: 軽量エディタ
-  - NERDTree（ファイルツリー表示）
-  - シンタックスハイライト
-  - スマートインデント
-
 ## ディレクトリ構成
 
-```
+```txt
 .
 ├── home/              # ホームディレクトリにリンクされる設定ファイル
 │   ├── .config/
-│   │   ├── fish/      # Fish shell設定
-│   │   ├── mise/      # miseツール設定
+│   │   ├── zsh/           # Zsh設定
+│   │   │   └── .zshrc
+│   │   ├── sheldon/       # Sheldonプラグインマネージャー設定
+│   │   │   └── plugins.toml
+│   │   ├── fish/          # Fish設定
+│   │   │   ├── config.fish
+│   │   │   └── fish_plugins
+│   │   ├── mise.toml      # miseツール設定
 │   │   └── starship.toml  # Starshipプロンプト設定
 │   ├── .gitconfig     # Git設定
 │   ├── .tmux.conf     # tmux設定
-│   └── .vimrc         # Vim設定
+│   ├── .vimrc         # Vim設定
+│   └── .zshenv        # Zsh環境変数（ZDOTDIR設定）
 ├── config/            # アプリケーション固有の設定
 │   ├── vscode/
 │   │   ├── extensions.txt # VSCode拡張機能リスト
@@ -97,6 +92,6 @@ make defaults
 
 ### 備考
 
-- iTerm2テーマ（`config/iterm2/themes/iceberg.itermcolors`）は手動でインポート
-- ターミナルのフォントは手動で設定する
-- デフォルトシェルは自動的にfishに変更される（`make defaults`実行時）
+- デフォルトのシェルはZsh
+
+### トラブルシューティング

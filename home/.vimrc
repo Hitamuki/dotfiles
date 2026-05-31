@@ -93,4 +93,3 @@ set hlsearch
 
 " ESCを2回押すとハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
-

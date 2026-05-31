@@ -19,24 +19,24 @@ OS=$(detect_os)
 echo "⚙️ Applying defaults for $OS"
 
 # --------------------
-# Fish shell setup
+# Zsh shell setup (Linux only)
 # --------------------
-if command -v fish &> /dev/null; then
-  FISH_PATH=$(command -v fish)
-  
-  # /etc/shellsにfishが登録されているか確認
-  if ! grep -q "$FISH_PATH" /etc/shells 2>/dev/null; then
-    echo "🐟 Adding fish to /etc/shells..."
-    echo "$FISH_PATH" | sudo tee -a /etc/shells > /dev/null
+if [ "$OS" = "linux" ] && command -v zsh &> /dev/null; then
+  ZSH_PATH=$(command -v zsh)
+
+  # /etc/shellsにzshが登録されているか確認
+  if ! grep -q "$ZSH_PATH" /etc/shells 2>/dev/null; then
+    echo "Adding zsh to /etc/shells..."
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells > /dev/null
   fi
-  
-  # 現在のシェルがfishでない場合は変更
-  if [ "$SHELL" != "$FISH_PATH" ]; then
-    echo "🐟 Changing default shell to fish..."
-    chsh -s "$FISH_PATH"
-    echo "✅ Default shell changed to fish. Please restart your terminal."
+
+  # 現在のシェルがzshでない場合は変更
+  if [ "$SHELL" != "$ZSH_PATH" ]; then
+    echo "Changing default shell to zsh..."
+    chsh -s "$ZSH_PATH"
+    echo "✅ Default shell changed to zsh. Please restart your terminal."
   else
-    echo "✅ Fish is already the default shell"
+    echo "✅ Zsh is already the default shell"
   fi
 fi
 

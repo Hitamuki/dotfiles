@@ -31,7 +31,6 @@ formulahendry.code-runner                            // 多言語のコードを
 gruntfuggly.todo-tree                                // TODO/FIXMEをサイドバーにツリー表示
 wayou.vscode-todo-highlight                          // コード内のTODOコメントを強調表示
 ms-vsliveshare.vsliveshare                           // Live Share: 開発者間でのリアルタイム共同編集
-pnp.polacode                                         // Polacode: コードを美しい共有用画像に変換
 
 // ==========================================
 // 3. AI & Development Assistants (AI支援)
@@ -86,7 +85,6 @@ ms-azuretools.vscode-containers                      // コンテナ開発用ユ
 ms-kubernetes-tools.vscode-kubernetes-tools          // Kubernetesリソースの操作・可視化
 hashicorp.terraform                                  // Terraform (HCL) の構文支援・補完
 amazonwebservices.aws-toolkit-vscode                 // AWSリソース操作、Lambda等のデバッグ
-ms-vscode-remote.vscode-remote-extensionpack         // リモート開発パック (SSH/Container/WSL)
 ms-vscode-remote.remote-ssh                          // サーバーにSSH接続して直接編集
 ms-vscode-remote.remote-ssh-edit                     // SSH設定ファイル用のエディタ支援
 ms-vscode-remote.remote-containers                   // コンテナ内を開発環境として利用
@@ -121,6 +119,7 @@ shd101wyy.markdown-preview-enhanced                  // 高機能プレビュー
 davidanson.vscode-markdownlint                       // Markdownの記述スタイルチェック
 takumii.markdowntable                                // Markdownテーブルの直感的な編集
 jebbs.plantuml                                       // PlantUMLによるUML図の生成
-bierner.markdown-mermaid                             // Markdown内でのMermaid図解表示
-bpruitt-goddard.mermaid-markdown-syntax-highlighting // Mermaid構文の強調表示
+mermaidchart.vscode-mermaid-chart                    // Markdown内でのMermaid
+vstirbu.vscode-mermaid-preview                       // Mermaid構文の図表示
 hediet.vscode-drawio                                 // VSCode内でDraw.io図面を直接編集
+tamasfe.even-better-toml                             // tomlファイル

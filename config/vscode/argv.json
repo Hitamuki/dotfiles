@@ -1,0 +1,5 @@
+// このファイルは settings.json では設定できない起動時オプションを管理する
+{
+   // 表示言語を日本語にする（拡張機能 MS-CEINTL.vscode-language-pack-ja が必要）
+  "locale": "ja"
+}

@@ -1,12 +1,19 @@
 shell = "zsh"
 
+# コマンド入力時に履歴から候補を薄く表示し、→キーで補完できるようにする
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
 
+# コマンドラインの構文を色付けし、入力ミスを視覚的に分かりやすくする
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
 use = ["{{ name }}.zsh"]
 
+# 多数のコマンドに対する追加の補完定義を提供する
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+
+# Tabキーで補完候補をリアルタイムに表示・選択できるようにする
+[plugins.zsh-autocomplete]
+github = "marlonrichert/zsh-autocomplete"

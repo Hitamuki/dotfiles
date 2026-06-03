@@ -76,6 +76,12 @@ if [ -n "$VSCODE_SETTINGS_DEST" ]; then
   link "$VSCODE_SETTINGS_SRC" "$VSCODE_SETTINGS_DEST"
 fi
 
+VSCODE_ARGV_SRC="$DOTFILES_DIR/config/vscode/argv.json"
+VSCODE_ARGV_DEST="$HOME/.vscode/argv.json"
+
+mkdir -p "$(dirname "$VSCODE_ARGV_DEST")"
+link "$VSCODE_ARGV_SRC" "$VSCODE_ARGV_DEST"
+
 # ------------------------
 # Setup brew and mise
 # ------------------------

@@ -1,5 +1,7 @@
 {
-  // ===== エディターの見た目・フォント設定 =====
+  // ==========================================
+  // エディターの見た目・フォント設定
+  // ==========================================
   // "editor.fontFamily": "Ricty Diminished", // エディターのフォント
   "editor.fontSize": 13, // エディターのフォントサイズ
   "editor.renderWhitespace": "all", // 空白文字（スペース・タブなど）をすべて表示
@@ -12,8 +14,12 @@
   "editor.guides.bracketPairs": true, // 対応する括弧をガイドラインで表示
   "editor.renderLineHighlight": "line", // 行のハイライト
   "editor.showFoldingControls": "always", // 折りたたみコントロール（▼）を常に表示
+  "editor.accessibilitySupport": "off", // スクリーンリーダー向けのアクセシビリティ最適化を無効化
   // "editor.smoothScrolling": true, // スクロールをスムーズに
-  // ===== エディターのカラー設定（テーマ補正など）=====
+
+  // ==========================================
+  // エディターのカラー設定（テーマ補正など）
+  // ==========================================
   "workbench.colorCustomizations": {
     "tab.activeBackground": "#555555cc", // アクティブなタブの背景色
     "editor.selectionBackground": "#51d62550", // テキスト選択範囲の背景色
@@ -21,7 +27,10 @@
     "editor.findMatchBackground": "#ccffff80", // 検索にマッチした部分の背景色
     "editor.findMatchHighlightBackground": "#a0cfcf70" // 検索マッチのうち選択以外の背景色
   },
-  // ===== ターミナル関連 =====
+
+  // ==========================================
+  // ターミナル関連
+  // ==========================================
   "terminal.integrated.fontFamily": "FiraCode Nerd Font", // ターミナルのフォント（Ricty Diminished／FiraCode Nerd Font）
   "terminal.integrated.fontSize": 14, // ターミナルのフォントサイズ
   "terminal.integrated.defaultProfile.osx": "zsh", // macOSでのデフォルトターミナル
@@ -31,36 +40,71 @@
   }, // macOS用の統合ターミナルに渡す環境変数
   "terminal.integrated.cursorStyle": "line", // ターミナルカーソルのスタイル
   "terminal.integrated.customGlyphs": true, // カスタムグリフ（絵文字など）の描画
-  "terminal.integrated.enableImages": true, // VSCode全体のUIスケーリング
+  "terminal.integrated.enableImages": true, // ターミナルでの画像表示を有効化
   // "terminal.integrated.smoothScrolling": true, // ターミナルのスクロールをスムーズに
-  "window.zoomLevel": 1,
+
+  // ==========================================
+  // ウィンドウ・ワークベンチ関連
+  // ==========================================
+  "window.zoomLevel": 1, // ウィンドウ全体のズームレベル
   "workbench.editor.wrapTabs": true, // タブが多くなった時に折り返して表示
   "workbench.editor.empty.hint": "hidden", // 空のエディターにヒントを表示しない
   "workbench.view.alwaysShowHeaderActions": true, // ビューのヘッダーに常に操作ボタンを表示
+
+  // ==========================================
+  // 検索関連
+  // ==========================================
   "search.defaultViewMode": "tree", // 検索結果の表示形式
   "search.showLineNumbers": true, // 検索結果に行番号を表示
-  // ===== Git 関連設定 =====
+
+  // ==========================================
+  // Git 関連設定
+  // ==========================================
   "git.autofetch": true, // 定期的にリモートリポジトリから自動フェッチする
   "git.fetchOnPull": true, // pull 時に自動で fetch を実行
   "git.autofetchPeriod": 300, // 自動 fetch の間隔
   "git.pruneOnFetch": true, // フェッチ時に削除されたリモートブランチも削除する
   "git.confirmSync": false, // Git同期時の確認ダイアログを表示しない
   "git.openRepositoryInParentFolders": "never", // 親フォルダにあるリポジトリを自動で開かない
-  // ===== ソース管理 (SCM) 関連 =====
+
+  // ==========================================
+  // ソース管理 (SCM) 関連
+  // ==========================================
   "scm.inputFontSize": 14, // ソース管理入力欄のフォントサイズ
   "scm.diffDecorationsGutterWidth": 5, // 差分表示（左ガター）の幅
   "scm.inputFontFamily": "editor", // コミットメッセージ入力欄のフォントをエディタと同じに
   "scm.defaultViewMode": "tree", // ソース管理ビューのデフォルト表示
-  // ===== ファイル・フォルダ表示設定 =====
+
+  // ==========================================
+  // ファイル・フォルダ表示設定
+  // ==========================================
   "files.exclude": {
     // 表示対象のフォルダ
     "**/.git": false
   },
-  // ===== リモート・ポート転送関連 =====
+
+  // ==========================================
+  // リモート・ポート転送関連
+  // ==========================================
   "remote.autoForwardPortsSource": "hybrid", // 自動ポートフォワーディングの対象をハイブリッド（プロセスとパターン両方）
-  // ===== 差分エディタ設定 =====
+
+  // ==========================================
+  // 差分エディタ設定
+  // ==========================================
   "diffEditor.ignoreTrimWhitespace": false, // 差分比較で末尾の空白を無視しない
-  // ===== 言語別設定 =====
+
+  // ==========================================
+  // Linter（ESLint）関連
+  // ==========================================
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto" // ESLint の作業ディレクトリを自動検出する
+    }
+  ],
+
+  // ==========================================
+  // 言語別設定
+  // ==========================================
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features" // JSON with Comments (jsonc) ファイル
   },
@@ -68,8 +112,39 @@
     "editor.defaultFormatter": "redhat.vscode-yaml" // YAML ファイル
   },
   "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one" // Markdown ファイル
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform", // Terraform ファイル
+    "editor.codeActionsOnSave": {
+      "source.formatAll.terraform": true // 保存時に Terraform 全体をフォーマット
+    }
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma" // Prisma スキーマファイル
+  },
+  "[javascript][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // JS/TS は Prettier でフォーマット
+    "editor.formatOnSave": true, // 保存時に自動フォーマット
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true, // 保存時に ESLint の自動修正を実行
+      "source.removeUnusedImports": true // 保存時に未使用の import を削除
+    }
+  },
+
+  // ==========================================
+  // Live Share 関連
+  // ==========================================
+  "liveshare.allowGuestDebugControl": true, // ゲストにデバッグ操作を許可
+  "liveshare.allowGuestTaskControl": true, // ゲストにタスク操作を許可
+  
+  // ==========================================
+  // AI
+  // ==========================================
+  "claudeCode.preferredLocation": "panel", // Claude Code の表示位置をパネルにする
+  
+    // ==========================================
+    // 未設定
+    // ==========================================
+  
   }
-  // ===== AI =====
-  // ===== 未整理 =====
-}

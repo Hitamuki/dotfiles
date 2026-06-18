@@ -2,10 +2,14 @@
 
 brew "fish"
 brew "git"
+brew "gogcli"
+brew "pandoc"
+brew "sheldon"
+brew "zsh"
 brew "git-flow"
 brew "mise"
 brew "starship"
 brew "tmux"
 brew "tree"
 brew "vim"
-
+brew "qmk/qmk/qmk"

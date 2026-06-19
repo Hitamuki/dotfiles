@@ -8,6 +8,9 @@ case "$(uname)" in
     ;;
 esac
 
+# ユーザーローカルの実行ファイル (~/.local/bin) を PATH に追加
+export PATH="$HOME/.local/bin:$PATH"
+
 # sheldon でプラグインを読み込む
 if command -v sheldon >/dev/null 2>&1; then
   eval "$(sheldon source)"

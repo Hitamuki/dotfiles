@@ -13,6 +13,7 @@
 - Git
 - パッケージ、アプリケーション管理（Homebrew）
 - パッケージバージョン管理（mise）
+- Claude Code（設定 + MCPサーバー登録）
 
 ## セットアップ
 
@@ -28,6 +29,10 @@ make mac
 
 # すべてをセットアップ（Linux）
 make linux
+
+# Claude Code にログイン後、MCPサーバーを登録
+#   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
+make mcp
 
 # ターミナルアプリの設定
   # iTerm2のテーマ（`config/iterm2/themes/iceberg.itermcolors`）を手動でインポート
@@ -51,7 +56,15 @@ make link
 
 # OS設定の適用
 make defaults
+
+# MCPサーバーの登録（claude CLI のログイン後に実行）
+make mcp
 ```
+
+> **Note**
+> `make mcp` は Claude Code にログイン済みであることが前提のため、`make all` / `make mac` / `make linux` には含めず、手動で実行する。
+> 自動登録されない MCP サーバー（drawio / github / context7）をユーザースコープで登録する。pencil や Slack・Notion・Google は自動登録（pencil はインストール時、それ以外は claude.ai コネクタ）されるため対象外。
+> 登録後、Claude Code 内で `/mcp` を実行して各 HTTP サーバーを認証する。
 
 ## ディレクトリ構成
 
@@ -68,6 +81,8 @@ make defaults
 │   │   │   └── fish_plugins
 │   │   ├── mise.toml      # miseツール設定
 │   │   └── starship.toml  # Starshipプロンプト設定
+│   ├── .claude/
+│   │   └── settings.json  # Claude Code設定
 │   ├── .gitconfig     # Git設定
 │   ├── .tmux.conf     # tmux設定
 │   ├── .vimrc         # Vim設定
@@ -82,7 +97,8 @@ make defaults
 ├── scripts/
 │   ├── bootstrap.sh   # パッケージインストール
 │   ├── link.sh        # シンボリックリンク作成
-│   └── defaults.sh    # OS設定適用
+│   ├── defaults.sh    # OS設定適用
+│   └── mcp.sh         # MCPサーバー登録（claudeログイン後に手動実行）
 ├── Brewfile           # macOS用パッケージ
 ├── Brewfile.Linux     # Linux用パッケージ
 └── Makefile           # セットアップコマンド

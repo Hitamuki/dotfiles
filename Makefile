@@ -1,5 +1,5 @@
 # タスク
-.PHONY: all bootstrap link defaults mac linux
+.PHONY: all bootstrap link defaults mcp mac linux
 
 # デフォルトターゲット（makeコマンドを引数なしで実行）
 all: bootstrap link defaults
@@ -12,6 +12,11 @@ link:
 
 defaults:
 	bash ./scripts/defaults.sh
+
+# MCP サーバー登録。claude CLI のログイン後に手動で実行する
+# （初回オンボーディングやログインが前提のため all には含めない）
+mcp:
+	bash ./scripts/mcp.sh
 
 mac:
 	bash ./scripts/bootstrap.sh mac

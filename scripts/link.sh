@@ -54,6 +54,10 @@ link "$DOTFILES_SRC/.vimrc" ~/.vimrc
 link "$DOTFILES_SRC/.gitconfig" ~/.gitconfig
 link "$DOTFILES_SRC/.tmux.conf" ~/.tmux.conf
 
+# .claude内にcredentialsやsession等のランタイムファイルが生成されるため、設定ファイルのみ個別にシンボリックリンクを作成する
+mkdir -p ~/.claude
+link "$DOTFILES_SRC/.claude/settings.json" ~/.claude/settings.json
+
 # ------------------------
 # VSCode settings
 # ------------------------

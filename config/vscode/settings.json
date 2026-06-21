@@ -32,8 +32,8 @@
   "terminal.integrated.fontSize": 14, // ターミナルのフォントサイズ
   "terminal.integrated.defaultProfile.osx": "zsh", // macOSでのデフォルトターミナル
   "terminal.integrated.defaultProfile.linux": "zsh", // Linuxでのデフォルトターミナル
-  "terminal.integrated.env.osx": { // macOS用の統合ターミナルに渡す環境変数
-    "Q_NEW_SESSION": "1" // Amazon Q に新規セッションとして起動させる
+  "terminal.integrated.env.osx": {
+    "Q_NEW_SESSION": "1"
   },
   "terminal.integrated.cursorStyle": "line", // ターミナルカーソルのスタイル
   "terminal.integrated.customGlyphs": true, // カスタムグリフ（絵文字など）の描画

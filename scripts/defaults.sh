@@ -47,8 +47,8 @@ if [ "$OS" = "mac" ]; then
   # Finder: 隠しファイル表示
   defaults write com.apple.finder AppleShowAllFiles -bool true
 
-  # キーリピート高速化
-  defaults write NSGlobalDomain KeyRepeat -int 1
+  # キーリピート
+  defaults write NSGlobalDomain KeyRepeat -int 20
   defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
   # Nerd Fontインストール (Fira Code)

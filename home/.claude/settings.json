@@ -2,9 +2,7 @@
   "env": {
     "PATH": "${HOME}/.local/share/mise/shims:${PATH}"
   },
-  "enableAllProjectMcpServers": true,
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(gh:*)",
       "Bash(node:*)",
@@ -28,7 +26,11 @@
       "Bash(sort:*)",
       "Bash(uniq:*)",
       "Bash(file:*)",
-      "Bash(env)"
-    ]
-  }
+      "Bash(env)",
+      "mcp__pencil"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "enableAllProjectMcpServers": true,
+  "theme": "light-daltonized"
 }

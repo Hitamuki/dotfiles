@@ -56,7 +56,7 @@
     "{git,gitlens,conflictResolution,vscode-local-history}:/**/*.tc.json": "default", // 差分・ソース管理では .tc.json を標準エディタで開く
     "{git,gitlens,conflictResolution,vscode-local-history}:/**/*.{asl.json,asl.yaml,asl.yml}": "default", // 差分・ソース管理では ASL 定義を標準エディタで開く
     "*.md": "default", // Markdown は標準エディタで開く
-    "{git,gitlens,conflictResolution,vscode-local-history}:/**/*.tsv": "default", // 差分・ソース管理ではビューアを使わず標準テキスト表示にする
+    "{git,gitlens,conflictResolution,vscode-local-history,git-graph}:/**/*.tsv": "default", // 差分・ソース管理・Git Graph ではビューアを使わず標準テキスト表示にする
     "*.tsv": "xlsxViewer.tsv" // TSV は xlsx Viewer で開く
   },
   // ==========================================
@@ -86,9 +86,17 @@
   "[yaml]": { // YAML の言語別設定
     "editor.defaultFormatter": "redhat.vscode-yaml" // YAML ファイル
   },
-  "[markdown]": { // Markdown の言語別設定
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one" // Markdown ファイル
+  "[markdown]": {
+    // 保存時に自動整形・自動修正しない
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    // markdownlint の保存時オートフィックスを抑止する
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.fixAll.markdownlint": "never"
+    }
   },
+  "markdown.extension.list.indentationSize": "inherit", // リストのインデント幅を editor.tabSize に従わせる（adaptive による 4→2 の潰れを防ぐ）
   "[terraform]": { // Terraform の言語別設定
     "editor.defaultFormatter": "hashicorp.terraform", // Terraform ファイル
     "editor.codeActionsOnSave": { // 保存時に実行するコードアクション

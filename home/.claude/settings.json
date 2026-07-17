@@ -29,7 +29,7 @@
       "Bash(env)",
       "mcp__pencil"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "enableAllProjectMcpServers": true,
   "theme": "light-daltonized"

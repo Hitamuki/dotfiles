@@ -7,6 +7,7 @@ brew "pandoc"
 brew "sheldon"
 brew "zsh"
 brew "git-flow"
+brew "gawk"  # ble.shのビルドに必要
 brew "mise"
 brew "starship"
 brew "tmux"

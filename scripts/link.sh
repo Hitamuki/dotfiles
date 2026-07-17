@@ -43,6 +43,11 @@ mkdir -p ~/.config/zsh
 link "$DOTFILES_SRC/.config/zsh/.zshrc" ~/.config/zsh/.zshrc
 link "$DOTFILES_SRC/.zshenv" ~/.zshenv
 
+link "$DOTFILES_SRC/.bashrc" ~/.bashrc
+
+mkdir -p ~/.config/bash
+link "$DOTFILES_SRC/.config/bash/.bashrc" ~/.config/bash/.bashrc
+
 mkdir -p ~/.config/sheldon
 link "$DOTFILES_SRC/.config/sheldon/plugins.toml" ~/.config/sheldon/plugins.toml
 
@@ -90,7 +95,11 @@ link "$VSCODE_ARGV_SRC" "$VSCODE_ARGV_DEST"
 # Setup brew and mise
 # ------------------------
 # Setup brew PATH
-if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+if [ -x "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x "/usr/local/bin/brew" ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 elif [ -x "$HOME/.linuxbrew/bin/brew" ]; then
   eval "$($HOME/.linuxbrew/bin/brew shellenv)"
@@ -105,8 +114,11 @@ fi
 # ------------------------
 # Install mise
 # ------------------------
-
-mise install --verbose
+if command -v mise &> /dev/null; then
+  mise install --verbose
+else
+  echo "⚠️  mise が見つかりません。Brewfile のインストールを確認してください（bootstrap.sh を先に実行してください）。"
+fi
 
 # ------------------------
 # Install vim-plug for Vim plugins

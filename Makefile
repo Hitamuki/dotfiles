@@ -1,5 +1,5 @@
 # タスク
-.PHONY: all bootstrap link defaults mcp mac linux
+.PHONY: all bootstrap link defaults mcp mac linux windows
 
 # デフォルトターゲット（makeコマンドを引数なしで実行）
 all: bootstrap link defaults
@@ -27,3 +27,8 @@ linux:
 	bash ./scripts/bootstrap.sh linux
 	bash ./scripts/link.sh
 	bash ./scripts/defaults.sh linux
+
+# Windows ホストでアプリのみインストール（PowerShell から実行）
+# WSL2 側のセットアップは別途 `make linux` を実行する
+windows:
+	powershell -ExecutionPolicy Bypass -File ./scripts/windows.ps1

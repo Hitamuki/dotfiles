@@ -1,34 +1,33 @@
 # dotfiles
 
 - 個人的な開発環境の設定ファイル集
-- macOSとLinuxに対応
+- macOS / Linux / Windows（WSL2）に対応
 
 ## 概要
 
 このリポジトリには以下の設定が含まれる
 
-- シェル関連（シェル：Zsh + Sheldon、Fish + Fisher、Starship）
+- シェル関連（シェル：Zsh + Sheldon、Fish + Fisher、Starship。bashは手動起動時のみble.shで補助）
 - ターミナルマルチプレクサ（tmux）
 - エディタ（VSCode、Vim）
 - Git
-- パッケージ、アプリケーション管理（Homebrew）
+- パッケージ、アプリケーション管理（Homebrew / Windows のアプリは winget）
 - パッケージバージョン管理（mise）
 - Claude Code（設定 + MCPサーバー登録）
 
 ## セットアップ
 
-### クイックスタート
+OSごとに手順が異なるため、該当する環境のセクションを参照する。
+
+### macOS
 
 ```bash
 # リポジトリをクローン
 
 # 「home/.gitconfig」でGitのユーザー情報設定
 
-# すべてをセットアップ（macOS）
+# すべてをセットアップ
 make mac
-
-# すべてをセットアップ（Linux）
-make linux
 
 # Claude Code にログイン後、MCPサーバーを登録
 #   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
@@ -41,6 +40,82 @@ make mcp
     # iTerm2（Settings → Profiles → Text → Font → 「Nerd Font」で検索
   # 透明度
     # iTerm2（Settings → Profiles → Window → Transparency：30）
+```
+
+### Linux
+
+```bash
+# リポジトリをクローン
+
+# 「home/.gitconfig」でGitのユーザー情報設定
+
+# すべてをセットアップ
+make linux
+
+# Claude Code にログイン後、MCPサーバーを登録
+#   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
+make mcp
+```
+
+### Windows（Windows + WSL2）
+
+Windows では2つの環境を順番にセットアップする。
+`make windows` は **Windows ホスト側の GUI アプリをインストールするだけ** で、開発環境は構築されない。
+開発環境は WSL2 上の `make linux` で構築するため、**両方の実行が必要**。
+
+1. **Windows ホスト（PowerShell）── アプリのインストールのみ**
+
+   - **リポジトリをクローン**（以降の手順はこのREADMEを参照しながら進める）
+
+   - **WSL2 と Ubuntu のインストール**（未導入の場合）
+
+     ```powershell
+     # 管理者権限の PowerShell で実行
+     wsl --install
+     ```
+
+     - 既定のディストリビューションとして Ubuntu が導入される（別のディストリビューションを使う場合は `wsl --install -d <ディストリ名>`）。
+     - 実行後、再起動を求められることがある。再起動後、初回起動時に Ubuntu の初期化とUNIXユーザー名・パスワードの設定を行う。
+     - 既に `wsl --install` を実行済みで OS が古い場合は `wsl --update` でカーネルを更新できる。
+
+   - **アプリのインストール**
+
+     ```powershell
+     # Brewfile の cask 相当（VSCode・Chrome・Slack など）を winget で導入
+     make windows
+     ```
+
+     - インストール対象は `Wingetfile` で管理する。
+     - `make` が無い場合は直接実行も可: `powershell -ExecutionPolicy Bypass -File ./scripts/windows.ps1`
+     - winget が無い場合は Microsoft Store から「App Installer」を導入する。
+
+2. **WSL2（必須）── 開発環境のセットアップ**
+
+   WSL2はWindowsホストとは別のファイルシステムのため、リポジトリを別途クローンする。
+
+   ```bash
+   # リポジトリをクローン
+
+   # 「home/.gitconfig」でGitのユーザー情報設定
+
+   # CLI ツール・dotfiles・OS設定（Linux と同じ）
+   make linux
+   ```
+
+   > `make windows` だけでは開発環境は構築されない。
+   > 必ず WSL2 側で `make linux` を実行すること。
+
+### インストール後の確認（mise）
+
+`make` 実行時に mise のツールインストールに失敗することがある。
+セットアップ後に `mise list` でインストール状況を確認し、未インストールのツールがあれば `mise install` を実行する。
+
+```bash
+# インストール済みツールの確認
+mise list
+
+# 未インストールのツールがあればインストール
+mise install
 ```
 
 ### 個別セットアップ
@@ -79,6 +154,8 @@ make mcp
 │   │   ├── fish/          # Fish設定
 │   │   │   ├── config.fish
 │   │   │   └── fish_plugins
+│   │   ├── bash/           # bash設定
+│   │   │   └── .bashrc     # ble.shの読み込みなど
 │   │   ├── mise.toml      # miseツール設定
 │   │   └── starship.toml  # Starshipプロンプト設定
 │   ├── .claude/
@@ -86,7 +163,8 @@ make mcp
 │   ├── .gitconfig     # Git設定
 │   ├── .tmux.conf     # tmux設定
 │   ├── .vimrc         # Vim設定
-│   └── .zshenv        # Zsh環境変数（ZDOTDIR設定）
+│   ├── .zshenv        # Zsh環境変数（ZDOTDIR設定）
+│   └── .bashrc        # bash設定を読み込むshim（本体は.config/bash/.bashrc）
 ├── config/            # アプリケーション固有の設定
 │   ├── vscode/
 │   │   ├── extensions.txt # VSCode拡張機能リスト
@@ -98,9 +176,11 @@ make mcp
 │   ├── bootstrap.sh   # パッケージインストール
 │   ├── link.sh        # シンボリックリンク作成
 │   ├── defaults.sh    # OS設定適用
-│   └── mcp.sh         # MCPサーバー登録（claudeログイン後に手動実行）
+│   ├── mcp.sh         # MCPサーバー登録（claudeログイン後に手動実行）
+│   └── windows.ps1    # Windowsアプリインストール（winget）
 ├── Brewfile           # macOS用パッケージ
 ├── Brewfile.Linux     # Linux用パッケージ
+├── Wingetfile         # Windows用アプリ（winget）
 └── Makefile           # セットアップコマンド
 ```
 
@@ -109,5 +189,66 @@ make mcp
 ### 備考
 
 - デフォルトのシェルはZsh
+- bashにもプラグインマネージャー相当の仕組みとして [ble.sh](https://github.com/akinomyoga/ble.sh) を導入している（`bootstrap.sh` が自動でclone・ビルドする）
+  - zshの `zsh-autosuggestions` + `zsh-syntax-highlighting` に相当する自動候補表示・シンタックスハイライトをbashでも利用できる
+  - zshで使っているSheldonはビルド済みファイルの存在を前提にプラグインを解決するため、ビルドが必要なble.shの管理には向かない。そのためble.shだけは `bootstrap.sh` 内で個別にclone・ビルドしている
+  - デフォルトシェルはbashに変更しない。手動で `bash` を起動した場合にのみ有効
 
 ### トラブルシューティング
+
+#### `make mac` 実行中に `mise: command not found` で失敗する
+
+- **原因**：Homebrew を新規インストールした直後は、同じシェル内では `PATH` に `/opt/homebrew/bin` が反映されていない。そのため `bootstrap.sh` 内の `brew bundle`（`mise` のインストール）が実行されず、後続の `link.sh` が `mise install` に失敗していた。
+- **対処**：本リポジトリの `scripts/bootstrap.sh` / `scripts/link.sh` は既に対策済み（インストール直後に `eval "$(brew shellenv)"` でPATHを通すよう修正済み）。それでも発生する場合は以下を試す。
+
+  ```bash
+  # Homebrew を手動でPATHに通してから再実行
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  make mac
+  ```
+
+#### Homebrew インストール直後に `brew: command not found` になる
+
+- **原因**：Homebrewのインストーラーは `~/.zprofile` にPATH設定を追記するが、それは**新しいシェルを起動したときにだけ**反映される。インストール直後の同じターミナルには反映されない。
+- **対処**：ターミナルを再起動するか、以下を実行してから続きのコマンドを実行する。
+
+  ```bash
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  ```
+
+#### `make mac` 実行中に `sudo` パスワードを複数回聞かれる
+
+- **原因**：`bootstrap.sh` はHomebrewが `PATH` 上で見つからない場合、インストール済みかどうかに関わらず再度インストーラーを起動する（Homebrew自体は既にインストール済みなら安全にスキップされるが、その前段の `sudo -v` は毎回実行される）。
+- **対処**：動作上問題はないため、パスワードを再入力すればそのまま進行する。気になる場合は事前に `eval "$(/opt/homebrew/bin/brew shellenv)"` を実行してからセットアップする。
+
+#### `scripts/defaults.sh` で `brew: command not found` になる（想定）
+
+- **原因**：`defaults.sh` はNerd Fontの確認に `brew list` を使用するが、`bootstrap.sh` / `link.sh` と同様に別プロセスとして実行されるため、`PATH` にHomebrewが通っていないと失敗する可能性がある。
+- **対処**：`eval "$(/opt/homebrew/bin/brew shellenv)"` を実行してから `make defaults`（または `make mac`）を再実行する。
+
+#### `mise install` で特定のツールのビルドに失敗する（想定）
+
+- **原因**：`node` などソースビルドが発生するツールは、Xcode Command Line Tools やビルド依存ライブラリが無いと失敗することがある。
+- **対処**：
+
+  ```bash
+  xcode-select --install
+
+  # 失敗したツールだけ詳細ログを見ながら再実行
+  mise install <tool>@<version> --verbose
+  ```
+
+#### 既存の設定ファイルが `.backup` になっている
+
+- **原因**：`link.sh` はシンボリックリンクを作成する際、リンクではない既存ファイルを検出すると `<ファイル名>.backup` として退避してからリンクを貼る仕様になっている（意図しない上書き防止のため）。
+- **対処**：退避された内容が必要な場合は `.backup` ファイルの中身を確認し、必要な設定を移植する。不要であれば削除して問題ない。
+
+#### VSCode拡張機能がインストールされない
+
+- **原因**：`bootstrap.sh` は `code` コマンドが `PATH` に存在する場合のみ拡張機能をインストールする。VSCodeを個別インストールした直後は `code` コマンドが未登録なことが多い。
+- **対処**：VSCode内でコマンドパレット（`Cmd+Shift+P`）から `Shell Command: Install 'code' command in PATH` を実行し、`make bootstrap` を再実行する。
+
+#### Linux（WSL2含む）でシェルを `zsh` に変更したのに反映されない
+
+- **原因**：`defaults.sh` の `chsh -s` はログインシェルの設定を変更するだけで、既に開いているターミナルセッションには反映されない。
+- **対処**：ターミナル（WSL2の場合はWindows Terminalなど）を再起動する。

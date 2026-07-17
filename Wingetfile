@@ -1,0 +1,28 @@
+# winget (Windows)
+#
+# Brewfile の cask 相当の GUI アプリを Windows ホストへインストールするための一覧。
+# Windows の PowerShell で `make windows`（= scripts/windows.ps1）が読み込んで使用する。
+#
+# 書式: 1行に winget のパッケージ ID を1つ。「#」以降はコメント。
+# ID は `winget search <名前>` で確認できる。
+
+# --- Brewfile の cask と対応 ---
+Adobe.Acrobat.Reader.64-bit    # adobe-acrobat-reader
+Docker.DockerDesktop           # docker-desktop
+dbeaver.dbeaver                # dbeaver-community
+DeepL.DeepL                    # deepl
+DevToys-app.DevToys            # devtoys  (ID 不一致の場合は `winget search DevToys` で確認)
+JGraph.Draw                    # drawio
+Figma.Figma                    # figma
+Google.Chrome                  # google-chrome
+Google.JapaneseIME             # google-japanese-ime  (ID 不一致の場合は `winget search "Google 日本語入力"` で確認)
+Notion.Notion                  # notion
+SlackTechnologies.Slack        # slack
+Microsoft.VisualStudioCode     # visual-studio-code
+OpenAI.ChatGPT                 # chatgpt  (ID 不一致の場合は `winget search ChatGPT` で確認)
+Anthropic.Claude               # claude   (ID 不一致の場合は `winget search Claude` で確認)
+Microsoft.WindowsTerminal      # iterm2 の代替（Windows のターミナル）
+
+# --- macOS 専用のため対象外（Windowsに同等の標準機能・別ツールが存在） ---
+# alt-tab, clipy, homerow, itsycal, karabiner-elements, mi, mos, raycast
+# font-hack-nerd-font, font-ricty-diminished（フォントはwinget非配布のため windows.ps1 で Fira Code のみ別途インストール）

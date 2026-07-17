@@ -8,6 +8,8 @@ brew "docker"
 brew "fish"
 brew "git"
 brew "gogcli"
+brew "bash"  # macOS標準のbash(3.2)はble.shの動作要件(4.0+)を満たさないため
+brew "gawk"  # ble.shのビルドに必要
 brew "pandoc"
 brew "sheldon"
 brew "zsh"

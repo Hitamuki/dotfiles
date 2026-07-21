@@ -55,6 +55,12 @@ link "$DOTFILES_SRC/.config/mise.toml" ~/.config/mise.toml
 
 link "$DOTFILES_SRC/.config/starship.toml" ~/.config/starship.toml
 
+mkdir -p ~/.config/alacritty
+link "$DOTFILES_SRC/.config/alacritty/alacritty.toml" ~/.config/alacritty/alacritty.toml
+
+mkdir -p ~/.config/herdr
+link "$DOTFILES_SRC/.config/herdr/config.toml" ~/.config/herdr/config.toml
+
 link "$DOTFILES_SRC/.vimrc" ~/.vimrc
 link "$DOTFILES_SRC/.gitconfig" ~/.gitconfig
 link "$DOTFILES_SRC/.tmux.conf" ~/.tmux.conf

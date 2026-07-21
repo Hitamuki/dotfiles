@@ -8,6 +8,7 @@
 
 # --- Brewfile の cask と対応 ---
 Adobe.Acrobat.Reader.64-bit    # adobe-acrobat-reader
+Alacritty.Alacritty            # alacritty
 Docker.DockerDesktop           # docker-desktop
 dbeaver.dbeaver                # dbeaver-community
 DeepL.DeepL                    # deepl
@@ -22,6 +23,7 @@ Microsoft.VisualStudioCode     # visual-studio-code
 OpenAI.ChatGPT                 # chatgpt  (ID 不一致の場合は `winget search ChatGPT` で確認)
 Anthropic.Claude               # claude   (ID 不一致の場合は `winget search Claude` で確認)
 Microsoft.WindowsTerminal      # iterm2 の代替（Windows のターミナル）
+Zen-Team.Zen-Browser           # zen
 
 # --- macOS 専用のため対象外（Windowsに同等の標準機能・別ツールが存在） ---
 # alt-tab, clipy, homerow, itsycal, karabiner-elements, mi, mos, raycast

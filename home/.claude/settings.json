@@ -1,6 +1,21 @@
 {
+  "enableAllProjectMcpServers": true,
   "env": {
     "PATH": "${HOME}/.local/share/mise/shims:${PATH}"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ]
   },
   "permissions": {
     "allow": [
@@ -31,6 +46,5 @@
     ],
     "defaultMode": "auto"
   },
-  "enableAllProjectMcpServers": true,
   "theme": "light-daltonized"
 }

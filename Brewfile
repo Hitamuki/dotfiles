@@ -10,6 +10,8 @@ brew "git"
 brew "gogcli"
 brew "bash"  # macOS標準のbash(3.2)はble.shの動作要件(4.0+)を満たさないため
 brew "gawk"  # ble.shのビルドに必要
+brew "go"    # herdr-token-dashboardプラグインのビルドに必要
+brew "herdr"
 brew "pandoc"
 brew "sheldon"
 brew "zsh"
@@ -24,6 +26,7 @@ brew "qmk/qmk/qmk"
 
 # Cask
 cask "adobe-acrobat-reader"
+cask "alacritty"
 cask "alt-tab"
 cask "antigravity"
 cask "apidog"
@@ -81,6 +84,7 @@ cask "visual-studio-code"
 cask "warp"
 cask "windsurf"
 cask "wireshark-app"
+cask "zen"
 cask "zoom"
 
 # Mas

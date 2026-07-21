@@ -1,5 +1,5 @@
 # タスク
-.PHONY: all bootstrap link defaults mcp mac linux windows
+.PHONY: all bootstrap link defaults mcp herdr-plugins mac linux windows
 
 # デフォルトターゲット（makeコマンドを引数なしで実行）
 all: bootstrap link defaults
@@ -17,6 +17,10 @@ defaults:
 # （初回オンボーディングやログインが前提のため all には含めない）
 mcp:
 	bash ./scripts/mcp.sh
+
+# herdr プラグインの導入。ビルドスクリプトを実行するプラグインを含むため手動で実行する
+herdr-plugins:
+	bash ./scripts/herdr-plugins.sh
 
 mac:
 	bash ./scripts/bootstrap.sh mac

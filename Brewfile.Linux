@@ -8,6 +8,8 @@ brew "sheldon"
 brew "zsh"
 brew "git-flow"
 brew "gawk"  # ble.shのビルドに必要
+brew "go"    # herdr-token-dashboardプラグインのビルドに必要
+brew "herdr"
 brew "mise"
 brew "starship"
 brew "tmux"

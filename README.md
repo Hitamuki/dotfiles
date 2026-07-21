@@ -33,6 +33,12 @@ make mac
 #   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
 make mcp
 
+# herdrのClaude Codeインテグレーションを導入
+herdr integration install claude
+
+# herdrプラグインの導入（config/herdr/herdr-plugin.toml で管理。ビルドスクリプトを実行するため内容確認の上で実行）
+make herdr-plugins
+
 # ターミナルアプリの設定
   # iTerm2のテーマ（`config/iterm2/themes/iceberg.itermcolors`）を手動でインポート
     # iTerm2（Settings → Profiles → Colors → Color Preset
@@ -55,6 +61,12 @@ make linux
 # Claude Code にログイン後、MCPサーバーを登録
 #   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
 make mcp
+
+# herdrのClaude Codeインテグレーションを導入
+herdr integration install claude
+
+# herdrプラグインの導入（config/herdr/herdr-plugin.toml で管理。ビルドスクリプトを実行するため内容確認の上で実行）
+make herdr-plugins
 ```
 
 ### Windows（Windows + WSL2）
@@ -134,12 +146,23 @@ make defaults
 
 # MCPサーバーの登録（claude CLI のログイン後に実行）
 make mcp
+
+# herdrのClaude Codeインテグレーションを導入
+herdr integration install claude
+
+# herdrプラグインの導入
+make herdr-plugins
 ```
 
 > **Note**
 > `make mcp` は Claude Code にログイン済みであることが前提のため、`make all` / `make mac` / `make linux` には含めず、手動で実行する。
 > 自動登録されない MCP サーバー（drawio / github / context7）をユーザースコープで登録する。pencil や Slack・Notion・Google は自動登録（pencil はインストール時、それ以外は claude.ai コネクタ）されるため対象外。
 > 登録後、Claude Code 内で `/mcp` を実行して各 HTTP サーバーを認証する。
+>
+> `herdr integration install claude` はherdrが `~/.claude/hooks/herdr-agent-state.sh`（herdrが管理・自動生成するランタイムファイルのため dotfiles では追跡しない）を生成し、`home/.claude/settings.json` に `SessionStart` フックを追記するコマンド。マシンごとに手動実行が必要（`make all` / `make mac` / `make linux` には含めない）。
+> フックの実行コマンドは `bash "$HOME/.claude/hooks/herdr-agent-state.sh" session` のように `$HOME` で参照しているため、`home/.claude/settings.json` はどの環境でもそのまま利用できる。
+>
+> `make herdr-plugins`（`scripts/herdr-plugins.sh`）は `config/herdr/herdr-plugin.toml` に列挙したプラグインを `herdr plugin install` で導入する。プラグインによってはリポジトリ同梱のビルドスクリプトを実行する（例: herdr-token-dashboardはGoビルドを実行するため、Brewfileに `brew "go"` を追加済み）ため、`make all` / `make mac` / `make linux` には含めず、内容を確認した上で手動実行する。
 
 ## ディレクトリ構成
 
@@ -157,7 +180,11 @@ make mcp
 │   │   ├── bash/           # bash設定
 │   │   │   └── .bashrc     # ble.shの読み込みなど
 │   │   ├── mise.toml      # miseツール設定
-│   │   └── starship.toml  # Starshipプロンプト設定
+│   │   ├── starship.toml  # Starshipプロンプト設定
+│   │   ├── alacritty/     # Alacritty設定
+│   │   │   └── alacritty.toml
+│   │   └── herdr/         # herdr設定
+│   │       └── config.toml
 │   ├── .claude/
 │   │   └── settings.json  # Claude Code設定
 │   ├── .gitconfig     # Git設定
@@ -169,15 +196,18 @@ make mcp
 │   ├── vscode/
 │   │   ├── extensions.txt # VSCode拡張機能リスト
 │   │   └── settings.json  # VSCode設定
-│   └── iterm2/
-│       └── themes/
-│           └── iceberg.itermcolors  # iTerm2テーマ
+│   ├── iterm2/
+│   │   └── themes/
+│   │       └── iceberg.itermcolors  # iTerm2テーマ
+│   └── herdr/
+│       └── herdr-plugin.toml  # herdrプラグイン一覧（herdr plugin installで導入）
 ├── scripts/
-│   ├── bootstrap.sh   # パッケージインストール
-│   ├── link.sh        # シンボリックリンク作成
-│   ├── defaults.sh    # OS設定適用
-│   ├── mcp.sh         # MCPサーバー登録（claudeログイン後に手動実行）
-│   └── windows.ps1    # Windowsアプリインストール（winget）
+│   ├── bootstrap.sh     # パッケージインストール
+│   ├── link.sh          # シンボリックリンク作成
+│   ├── defaults.sh      # OS設定適用
+│   ├── mcp.sh           # MCPサーバー登録（claudeログイン後に手動実行）
+│   ├── herdr-plugins.sh # herdrプラグイン導入（手動実行）
+│   └── windows.ps1      # Windowsアプリインストール（winget）
 ├── Brewfile           # macOS用パッケージ
 ├── Brewfile.Linux     # Linux用パッケージ
 ├── Wingetfile         # Windows用アプリ（winget）

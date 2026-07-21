@@ -1,0 +1,14 @@
+# herdr プラグイン一覧
+#
+# `herdr plugin install <owner>/<repo>` で導入するプラグインを管理する。
+# 導入コマンド: bash ./scripts/herdr-plugins.sh
+# （インストール時にリポジトリ同梱のビルドスクリプトを実行するプラグインを含むため、
+#   make all / make mac / make linux には含めず、内容を確認した上で手動実行する）
+
+[[plugins]]
+source = "ogulcancelik/herdr-plugin-github-start"
+description = "GitHubのissue/PR/discussionからCodexやClaudeを起動する"
+
+[[plugins]]
+source = "Davidcreador/herdr-token-dashboard"
+description = "herdrの各ペインのトークン消費量・コストをダッシュボード表示する（ビルドにGoが必要。Brewfileに brew \"go\" を追加済み）"

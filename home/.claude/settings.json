@@ -1,22 +1,4 @@
 {
-  "enableAllProjectMcpServers": true,
-  "env": {
-    "PATH": "${HOME}/.local/share/mise/shims:${PATH}"
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Bash(gh:*)",
@@ -46,5 +28,31 @@
     ],
     "defaultMode": "auto"
   },
-  "theme": "light-daltonized"
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "hapins-claude-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "hapins/hapins-claude-plugins"
+      }
+    }
+  },
+  "theme": "light-daltonized",
+  "enabledPlugins": {
+    "cc-analytics@hapins-claude-plugins": true
+  }
 }

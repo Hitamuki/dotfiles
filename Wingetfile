@@ -1,10 +1,16 @@
 # winget (Windows)
 #
-# Brewfile の cask 相当の GUI アプリを Windows ホストへインストールするための一覧。
+# Brewfile の cask 相当の GUI アプリ、および PJ 間でバージョン切り替えが不要な
+# CLI ツールを Windows ホストへインストールするための一覧。
 # Windows の PowerShell で `make windows`（= scripts/windows.ps1）が読み込んで使用する。
 #
 # 書式: 1行に winget のパッケージ ID を1つ。「#」以降はコメント。
 # ID は `winget search <名前>` で確認できる。
+
+# --- CLI ツール（mise ではなく直接管理） ---
+Anthropic.ClaudeCode           # claude-code
+GitHub.cli                     # github-cli (gh)
+Google.AntigravityCLI          # antigravity-cli (gemini-cli の後継)
 
 # --- Brewfile の cask と対応 ---
 Adobe.Acrobat.Reader.64-bit    # adobe-acrobat-reader

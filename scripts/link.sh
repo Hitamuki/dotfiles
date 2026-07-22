@@ -26,12 +26,10 @@ link() {
   SRC=$1
   DEST=$2
 
-  if [ -e "$DEST" ] && [ ! -L "$DEST" ]; then
-    echo "Backing up $DEST"
-    mv "$DEST" "$DEST.backup"
-  fi
-
-  ln -sf "$SRC" "$DEST"
+  # 既存の実ファイル・シンボリックリンクは削除し、リポジトリへのシンボリックリンクを強制する
+  # （mise 等が実ファイルを生成してリンクが上書きされるケースでも、常にリポジトリを正とする）
+  rm -rf "$DEST"
+  ln -s "$SRC" "$DEST"
 }
 
 # .config内にキャッシュや一時ファイルが生成され、git statusが貯まる懸念があるため、個別にシンボリックリンクを作成する

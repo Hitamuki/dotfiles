@@ -4,15 +4,16 @@
 tap "qmk/qmk"
 
 # Formula
+brew "avrdude"       # keyball等のAVRキーボードファームウェア書き込みに使用
 brew "docker"
 brew "fish"
 brew "gh"
 brew "git"
 brew "gogcli"
-brew "bash"  # macOS標準のbash(3.2)はble.shの動作要件(4.0+)を満たさないため
-brew "gawk"  # ble.shのビルドに必要
-brew "go"    # herdr-token-dashboardプラグインのビルドに必要
+brew "bash"
+brew "hasura-cli"
 brew "herdr"
+brew "k6"
 brew "pandoc"
 brew "sheldon"
 brew "zsh"
@@ -29,6 +30,7 @@ brew "qmk/qmk/qmk"
 cask "adobe-acrobat-reader"
 cask "alacritty"
 cask "alt-tab"
+cask "android-studio"
 cask "antigravity"
 cask "antigravity-cli"
 cask "apidog"
@@ -45,13 +47,14 @@ cask "cursor"
 cask "dbeaver-community"
 cask "ddpm"
 cask "deepl"
+cask "devin-desktop"
 cask "devtoys"
 cask "discord"
 cask "displaylink"
 cask "docker-desktop"
 cask "drawio"
-cask "eset-cyber-security"
 cask "figma"
+cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-ricty-diminished"
 cask "gimp"
@@ -66,6 +69,7 @@ cask "itsycal"
 cask "karabiner-elements"
 cask "kiro"
 cask "kiro-cli"
+cask "meetingbar"
 cask "mi"
 cask "microsoft-edge"
 cask "microsoft-onenote"
@@ -85,7 +89,6 @@ cask "spotify"
 cask "utm"
 cask "visual-studio-code"
 cask "warp"
-cask "windsurf"
 cask "wireshark-app"
 cask "zen"
 cask "zoom"
@@ -98,5 +101,5 @@ mas "Kindle", id: 302584613
 mas "LINE", id: 539883307
 mas "Magnet", id: 441258766
 mas "MenubarX", id: 1575588022
-mas "RunCat", id: 1429033973
+mas "RunCat Neo", id: 6757801838
 mas "Xcode", id: 497799835

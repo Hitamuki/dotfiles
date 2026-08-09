@@ -1,0 +1,44 @@
+[
+  {
+    "name": "AdGuard AdBlocker",
+    "id": "bgnkhhnnamicmpeenaelnjfhikgbkllg",
+    "url": "https://chromewebstore.google.com/detail/adguard-adblocker/bgnkhhnnamicmpeenaelnjfhikgbkllg",
+    "description": "広告ブロッカー"
+  },
+  {
+    "name": "Bitwarden Password Manager",
+    "id": "nngceckbapebfimnlniiiahkandclblb",
+    "url": "https://chromewebstore.google.com/detail/bitwarden-password-manage/nngceckbapebfimnlniiiahkandclblb",
+    "description": "パスワードマネージャー"
+  },
+  {
+    "name": "Wappalyzer",
+    "id": "gppongmhjkpfnbhagpmjfkannfbllamg",
+    "url": "https://chromewebstore.google.com/detail/wappalyzer-technology-pro/gppongmhjkpfnbhagpmjfkannfbllamg",
+    "description": "Webサイトが使用している技術を可視化するプロファイラー"
+  },
+  {
+    "name": "Claude",
+    "id": "fcoeoabgfenejglbffodgkkbkcdhcgfn",
+    "url": "https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn",
+    "description": "Anthropic公式のClaudeブラウザ拡張機能"
+  },
+  {
+    "name": "React Developer Tools",
+    "id": "fmkadmapgofadopljbjfkapdkoienihi",
+    "url": "https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi",
+    "description": "React製サイトのコンポーネントツリーを確認できる開発者ツール"
+  },
+  {
+    "name": "Weblioポップアップ英和辞典",
+    "id": "oingodpdjohhkelnginmkagmkbplgema",
+    "url": "https://chromewebstore.google.com/detail/weblio%E3%83%9D%E3%83%83%E3%83%97%E3%82%A2%E3%83%83%E3%83%97%E8%8B%B1%E5%92%8C%E8%BE%9E%E5%85%B8/oingodpdjohhkelnginmkagmkbplgema",
+    "description": "英単語にカーソルを合わせるとポップアップで意味を表示する辞書"
+  },
+  {
+    "name": "Vimium",
+    "id": "dbepggeogbaibhgnhhndojpepiihcmeb",
+    "url": "https://chromewebstore.google.com/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb",
+    "description": "キーボード操作でブラウジングできるようにする拡張機能"
+  }
+]

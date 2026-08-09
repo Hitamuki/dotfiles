@@ -28,31 +28,10 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus",
   "enableAllProjectMcpServers": true,
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
-  "extraKnownMarketplaces": {
-    "hapins-claude-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "hapins/hapins-claude-plugins"
-      }
-    }
-  },
   "theme": "light-daltonized",
+  "tui": "fullscreen",
   "enabledPlugins": {
-    "cc-analytics@hapins-claude-plugins": true
   }
 }

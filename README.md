@@ -199,10 +199,12 @@ make herdr-plugins
 │   ├── iterm2/
 │   │   └── themes/
 │   │       └── iceberg.itermcolors  # iTerm2テーマ
-│   └── herdr/
-│       └── herdr-plugin.toml  # herdrプラグイン一覧（herdr plugin installで導入）
+│   ├── herdr/
+│   │   └── herdr-plugin.toml  # herdrプラグイン一覧（herdr plugin installで導入）
+│   └── chrome/
+│       └── extensions.json   # Chrome拡張機能一覧（bootstrap.shがWeb Storeページを開く）
 ├── scripts/
-│   ├── bootstrap.sh     # パッケージインストール
+│   ├── bootstrap.sh     # パッケージインストール・Chrome拡張機能ページオープン等
 │   ├── link.sh          # シンボリックリンク作成
 │   ├── defaults.sh      # OS設定適用
 │   ├── mcp.sh           # MCPサーバー登録（claudeログイン後に手動実行）
@@ -277,6 +279,11 @@ make herdr-plugins
 
 - **原因**：`bootstrap.sh` は `code` コマンドが `PATH` に存在する場合のみ拡張機能をインストールする。VSCodeを個別インストールした直後は `code` コマンドが未登録なことが多い。
 - **対処**：VSCode内でコマンドパレット（`Cmd+Shift+P`）から `Shell Command: Install 'code' command in PATH` を実行し、`make bootstrap` を再実行する。
+
+#### Chrome拡張機能のページが開かない・スキップされる
+
+- **原因**：`bootstrap.sh` は Google Chrome（macOSは `/Applications/Google Chrome.app`、Linuxは `google-chrome` / `google-chrome-stable` コマンド）が見つかる場合のみ `config/chrome/extensions.json` のWeb Storeページを開く。Brewfileのcask導入直後でインストールが完了していないと検出に失敗することがある。
+- **対処**：Chromeのインストール完了を確認してから `make bootstrap` を再実行する。Chromeは拡張機能をサイレントインストールできないため、開いた各タブで「Chromeに追加」を手動でクリックする必要がある。
 
 #### Linux（WSL2含む）でシェルを `zsh` に変更したのに反映されない
 

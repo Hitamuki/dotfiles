@@ -1,16 +1,23 @@
 # Homebrew Linux
 
+# Tap
+tap "qmk/qmk"
+
+# Formula
+brew "avrdude"       # keyball等のAVRキーボードファームウェア書き込みに使用
 brew "fish"
 brew "gh"
 brew "git"
 brew "gogcli"
+brew "hasura-cli"
+brew "herdr"
+brew "k6"
 brew "pandoc"
 brew "sheldon"
 brew "zsh"
 brew "git-flow"
 brew "gawk"  # ble.shのビルドに必要
 brew "go"    # herdr-token-dashboardプラグインのビルドに必要
-brew "herdr"
 brew "mise"
 brew "starship"
 brew "tmux"

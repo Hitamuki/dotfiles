@@ -2,6 +2,8 @@
 case "$(uname)" in
   Darwin)
     export PATH="/opt/homebrew/bin:$PATH"
+    # QMK (keyball) build: avr-gcc@8 is keg-only, so add it to PATH
+    export PATH="/opt/homebrew/opt/avr-gcc@8/bin:$PATH"
     ;;
   Linux)
     export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"

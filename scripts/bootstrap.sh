@@ -118,3 +118,30 @@ if command -v code &> /dev/null; then
   # コメント行を除去して拡張機能IDのみを抽出
   grep -v '^//' config/vscode/extensions.txt | sed 's|//.*||' | xargs -n 1 code --install-extension || true
 fi
+
+# ------------------------
+# Chrome extensions
+# Chromeは拡張機能をサイレントインストールできないため、
+# config/chrome/extensions.json に列挙したWeb Storeページを開く
+# （各ページで「Chromeに追加」を手動でクリックする）
+# ------------------------
+CHROME_FOUND=1
+if [ "$OS" = "mac" ] && [ -d "/Applications/Google Chrome.app" ]; then
+  open_chrome_url() { open -a "Google Chrome" "$1"; }
+elif command -v google-chrome &> /dev/null; then
+  open_chrome_url() { google-chrome "$1" &> /dev/null & }
+elif command -v google-chrome-stable &> /dev/null; then
+  open_chrome_url() { google-chrome-stable "$1" &> /dev/null & }
+else
+  CHROME_FOUND=0
+fi
+
+if [ "$CHROME_FOUND" = "1" ] && [ -f "config/chrome/extensions.json" ]; then
+  echo "🧩 Opening Chrome Web Store pages..."
+  grep '"url":' config/chrome/extensions.json | sed -E 's/^[[:space:]]*"url": *"(.*)",?$/\1/' | while read -r url; do
+    open_chrome_url "$url"
+  done
+  echo "✅ 各タブで「Chromeに追加」をクリックしてインストールしてください。"
+else
+  echo "⚠️  Google Chromeが見つからないため拡張機能ページのオープンをスキップしました。"
+fi

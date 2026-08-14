@@ -28,6 +28,16 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
+# VSCodeをherdrペイン内から起動するとHERDR_ENVが継承され、
+# VSCodeターミナルでのherdr起動が入れ子と誤検出されるため、外して起動する
+herdr() {
+  if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    env -u HERDR_ENV command herdr "$@"
+  else
+    command herdr "$@"
+  fi
+}
+
 if [[ -f "${ZDOTDIR:-$HOME}/.zshrc.local" ]]; then
   source "${ZDOTDIR:-$HOME}/.zshrc.local"
 fi

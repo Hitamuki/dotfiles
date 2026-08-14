@@ -38,6 +38,9 @@
   "terminal.integrated.cursorStyle": "line", // ターミナルカーソルのスタイル
   "terminal.integrated.customGlyphs": true, // カスタムグリフ（絵文字など）の描画
   "terminal.integrated.enableImages": true, // ターミナルでの画像表示を有効化
+  "accessibility.signals.terminalBell": { // ターミナルのベル（通知音）
+    "sound": "on" // ベルを音で鳴らす
+  },
   // "terminal.integrated.smoothScrolling": true, // ターミナルのスクロールをスムーズに
   // ==========================================
   // ワークベンチ・ウィンドウ（検索・ファイル表示・関連付け）
@@ -135,8 +138,8 @@
   // AI
   // ==========================================
   "claudeCode.preferredLocation": "panel", // Claude Code の表示位置をパネルにする
+  "gitlens.ai.vscode.model": "copilotcli:claude-haiku-4.5" // GitLens の AI 機能で使うモデル
   // ==========================================
   // 未設定
   // ==========================================
-  "gitlens.ai.vscode.model": "copilotcli:claude-haiku-4.5"
 }

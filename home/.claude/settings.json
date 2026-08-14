@@ -1,5 +1,11 @@
 {
+  "model": "fable",
+  "effortLevel": "xhigh",
+  "theme": "light-daltonized",
+  "tui": "fullscreen",
+  "preferredNotifChannel": "terminal_bell",
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Bash(gh:*)",
       "Bash(node:*)",
@@ -25,13 +31,48 @@
       "Bash(file:*)",
       "Bash(env)",
       "mcp__pencil"
-    ],
-    "defaultMode": "auto"
+    ]
   },
-  "model": "opus",
   "enableAllProjectMcpServers": true,
-  "theme": "light-daltonized",
-  "tui": "fullscreen",
-  "enabledPlugins": {
+  "enabledPlugins": {},
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/afplay",
+            "args": [
+              "/System/Library/Sounds/Glass.aiff"
+            ],
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "jq -r '(.cwd // \"\") | split(\"/\") | last' | { read -r dir; osascript -e 'on run argv' -e 'display notification \"応答が完了しました\" with title \"Claude Code\" subtitle (item 1 of argv)' -e 'end run' \"$dir\"; }",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/afplay",
+            "args": [
+              "/System/Library/Sounds/Funk.aiff"
+            ],
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "jq -r '(.message // \"入力待ちです\"), ((.cwd // \"\") | split(\"/\") | last)' | { read -r msg; read -r dir; osascript -e 'on run argv' -e 'display notification (item 1 of argv) with title \"Claude Code\" subtitle (item 2 of argv)' -e 'end run' \"$msg\" \"$dir\"; }",
+            "async": true
+          }
+        ]
+      }
+    ]
   }
 }

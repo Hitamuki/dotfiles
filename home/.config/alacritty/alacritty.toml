@@ -13,15 +13,15 @@ decorations = "full"
 size = 13.0
 
 [font.normal]
-family = "Hack Nerd Font Mono"
+family = "FiraCode Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "Hack Nerd Font Mono"
+family = "FiraCode Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "Hack Nerd Font Mono"
+family = "FiraCode Nerd Font Mono"
 style = "Italic"
 
 [cursor]

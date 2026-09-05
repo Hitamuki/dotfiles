@@ -1,9 +1,14 @@
 {
-  "model": "fable",
-  "effortLevel": "xhigh",
+  "model": "opus",
+  "effortLevel": "high",
   "theme": "light-daltonized",
   "tui": "fullscreen",
   "preferredNotifChannel": "terminal_bell",
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline.sh\"",
+    "padding": 0
+  },
   "permissions": {
     "defaultMode": "auto",
     "allow": [

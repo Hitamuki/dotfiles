@@ -10,6 +10,9 @@
 
 set -e
 
+# CWD に依存しないよう、スクリプト自身の位置から dotfiles のルートを解決する
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
 detect_os() {
   case "$(uname -s)" in
     Darwin) echo "mac" ;;
@@ -18,7 +21,20 @@ detect_os() {
   esac
 }
 
-OS=$(detect_os)
+# 第1引数（Makefile が渡す mac / linux）があればそれを使い、無ければ自動判定する。
+# 実行環境と食い違う指定は誤操作なので中断する。
+DETECTED_OS=$(detect_os)
+OS="${1:-$DETECTED_OS}"
+
+if [ "$DETECTED_OS" = "unknown" ]; then
+  echo "❌ 未対応のOSです（macOS / Linux のみ対応）"
+  exit 1
+fi
+
+if [ "$OS" != "$DETECTED_OS" ]; then
+  echo "❌ 指定されたOS（${OS}）が実行環境（${DETECTED_OS}）と一致しません。"
+  exit 1
+fi
 
 echo "🧠 Bootstrap for $OS"
 
@@ -48,8 +64,6 @@ install_brew_linux() {
     echo 'eval "$($HOME/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
     eval "$($HOME/.linuxbrew/bin/brew shellenv)"
   fi
-
-  brew bundle --file=./Brewfile.Linux
 }
 
 if ! command -v brew &> /dev/null; then
@@ -79,9 +93,9 @@ fi
 # ------------------------
 if command -v brew &>/dev/null; then
   if [ "$OS" = "mac" ]; then
-    brew bundle --file=./Brewfile
+    brew bundle --file="$DOTFILES_DIR/Brewfile"
   elif [ "$OS" = "linux" ]; then
-    brew bundle --file=./Brewfile.Linux
+    brew bundle --file="$DOTFILES_DIR/Brewfile.Linux"
   fi
 fi
 
@@ -116,7 +130,7 @@ install_ble_sh
 # ------------------------
 if command -v code &> /dev/null; then
   # コメント行を除去して拡張機能IDのみを抽出
-  grep -v '^//' config/vscode/extensions.txt | sed 's|//.*||' | xargs -n 1 code --install-extension || true
+  grep -v '^//' "$DOTFILES_DIR/config/vscode/extensions.txt" | sed 's|//.*||' | xargs -n 1 code --install-extension || true
 fi
 
 # ------------------------
@@ -136,9 +150,9 @@ else
   CHROME_FOUND=0
 fi
 
-if [ "$CHROME_FOUND" = "1" ] && [ -f "config/chrome/extensions.json" ]; then
+if [ "$CHROME_FOUND" = "1" ] && [ -f "$DOTFILES_DIR/config/chrome/extensions.json" ]; then
   echo "🧩 Opening Chrome Web Store pages..."
-  grep '"url":' config/chrome/extensions.json | sed -E 's/^[[:space:]]*"url": *"(.*)",?$/\1/' | while read -r url; do
+  grep '"url":' "$DOTFILES_DIR/config/chrome/extensions.json" | sed -E 's/^[[:space:]]*"url": *"(.*)",?$/\1/' | while read -r url; do
     open_chrome_url "$url"
   done
   echo "✅ 各タブで「Chromeに追加」をクリックしてインストールしてください。"

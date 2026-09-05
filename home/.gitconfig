@@ -1,3 +1,95 @@
-[user]
-  name =
-  email =
+# ==========================================================
+# Git 共通設定
+#
+# user.name / user.email などマシン・個人ごとの設定は
+# リポジトリ管理外の ~/.gitconfig.local に記述する。
+# ==========================================================
+
+[core]
+  editor = vim
+  quotepath = false
+  precomposeunicode = true
+  autocrlf = input
+  safecrlf = warn
+
+[init]
+  defaultBranch = main
+
+[color]
+  ui = auto
+
+[column]
+  ui = auto
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = version:refname
+
+[fetch]
+  prune = true
+  pruneTags = true
+
+[pull]
+  ff = only
+
+[push]
+  default = simple
+  autoSetupRemote = true
+  followTags = true
+
+[rebase]
+  # 未コミットの変更を自動で退避・復元する
+  autoStash = true
+  # fixup! / squash! コミットを自動で並べ替える
+  autosquash = true
+  # 積み重ねたブランチの参照をrebase時に追従させる（Git 2.38+）
+  updateRefs = true
+
+[merge]
+  # 競合表示に「共通の祖先」も含めて3方向で表示する（Git 2.35+）
+  conflictstyle = zdiff3
+
+[diff]
+  # 移動・複製を伴う変更でも読みやすい差分を出すアルゴリズム
+  algorithm = histogram
+  # 移動しただけの行を別の色で表示する
+  colorMoved = default
+  # 差分のプレフィックスを a/ b/ ではなく i/（index）w/（worktree）等にする
+  mnemonicPrefix = true
+  # ファイル名の変更を検出する
+  renames = true
+
+[rerere]
+  # 一度解決した競合を記録し、同じ競合が再発したら自動で再適用する
+  enabled = true
+  autoupdate = true
+
+[commit]
+  # コミットメッセージの編集画面に差分を表示する
+  verbose = true
+
+[log]
+  date = iso
+
+[help]
+  # コマンドのtypoを訂正するか確認する（Git 2.37+）
+  autocorrect = prompt
+
+[alias]
+  st = status --short --branch
+  sw = switch
+  br = branch
+  unstage = restore --staged
+  amend = commit --amend --no-edit
+  last = log -1 HEAD --stat
+  graph = log --graph --oneline --decorate --all
+
+# ==========================================================
+# マシン・個人ごとの設定を読み込む
+#
+# 末尾に置いているため、~/.gitconfig.local で上の設定を上書きできる。
+# ==========================================================
+[include]
+  path = ~/.gitconfig.local

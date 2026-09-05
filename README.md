@@ -13,7 +13,7 @@
 - Git
 - パッケージ、アプリケーション管理（Homebrew / Windows のアプリは winget）
 - パッケージバージョン管理（mise）
-- Claude Code（設定 + MCPサーバー登録）
+- Claude Code（設定 + ステータスライン + MCPサーバー登録）
 
 ## セットアップ
 
@@ -23,8 +23,6 @@ OSごとに手順が異なるため、該当する環境のセクションを参
 
 ```bash
 # リポジトリをクローン
-
-# 「home/.gitconfig」でGitのユーザー情報設定
 
 # すべてをセットアップ
 make mac
@@ -50,13 +48,26 @@ make herdr-plugins
 
 ### Linux
 
+素のディストリビューションには `git` / `make` / `curl` などが入っておらず、
+リポジトリのクローンや `make linux` の時点で失敗するため、先に前提パッケージを入れる。
+
+```bash
+# 前提パッケージ（Debian / Ubuntu 系）
+#   build-essential procps curl file git : Homebrew on Linux の要求パッケージ
+#   unzip fontconfig                     : Nerd Font の展開・登録に使用
+sudo apt update && sudo apt install -y build-essential procps curl file git unzip fontconfig
+```
+
 ```bash
 # リポジトリをクローン
 
-# 「home/.gitconfig」でGitのユーザー情報設定
-
 # すべてをセットアップ
 make linux
+
+# Gitのユーザー情報を設定
+#   make linux（link.sh）が ~/.gitconfig.local の雛形を生成するので、そこに記入する
+#   ※ home/.gitconfig はリポジトリ管理下なので個人情報を書かない
+vim ~/.gitconfig.local
 
 # Claude Code にログイン後、MCPサーバーを登録
 #   claude にログイン → make mcp → Claude Code 内で /mcp を実行し認証
@@ -105,17 +116,35 @@ Windows では2つの環境を順番にセットアップする。
 
    WSL2はWindowsホストとは別のファイルシステムのため、リポジトリを別途クローンする。
 
+   素の WSL2 Ubuntu には `git` / `make` / `unzip` が入っていないため、
+   **前提パッケージのインストールが最初のステップになる**（これを省くとクローンと `make linux` の時点で失敗する）。
+
+   ```bash
+   # 前提パッケージ（Homebrew on Linux の要求パッケージ + unzip）
+   #   フォントは Windows ホスト側が担当するため fontconfig は不要
+   sudo apt update && sudo apt install -y build-essential procps curl file git unzip
+   ```
+
    ```bash
    # リポジトリをクローン
 
-   # 「home/.gitconfig」でGitのユーザー情報設定
-
    # CLI ツール・dotfiles・OS設定（Linux と同じ）
    make linux
+
+   # Gitのユーザー情報を設定
+   #   make linux（link.sh）が ~/.gitconfig.local の雛形を生成するので、そこに記入する
+   #   ※ home/.gitconfig はリポジトリ管理下なので個人情報を書かない
+   vim ~/.gitconfig.local
    ```
 
    > `make windows` だけでは開発環境は構築されない。
    > 必ず WSL2 側で `make linux` を実行すること。
+
+   > **VSCode設定のリンクは `make link` の再実行が必要**
+   > VSCode のリモート用ディレクトリ `~/.vscode-server` は、**VSCode から初めて WSL に接続した後**にしか作られない。
+   > そのため初回セットアップでは必ずローカル Linux 用のパス（`~/.config/Code/User/settings.json`）にリンクされる。
+   > VSCode で一度 WSL に接続してから `make link` を再実行すると、正しい `~/.vscode-server/data/Machine/settings.json` にリンクされる
+   > （`link.sh` は WSL2 上でこの状態を検出すると警告を表示する）。
 
 ### インストール後の確認（mise）
 
@@ -186,8 +215,9 @@ make herdr-plugins
 │   │   └── herdr/         # herdr設定
 │   │       └── config.toml
 │   ├── .claude/
-│   │   └── settings.json  # Claude Code設定
-│   ├── .gitconfig     # Git設定
+│   │   ├── settings.json  # Claude Code設定
+│   │   └── statusline.sh  # Claude Codeのステータスライン（settings.jsonのstatusLineから呼ばれる）
+│   ├── .gitconfig     # Git共通設定（個人情報は書かず ~/.gitconfig.local をincludeする）
 │   ├── .tmux.conf     # tmux設定
 │   ├── .vimrc         # Vim設定
 │   ├── .zshenv        # Zsh環境変数（ZDOTDIR設定）
@@ -225,6 +255,30 @@ make herdr-plugins
   - zshの `zsh-autosuggestions` + `zsh-syntax-highlighting` に相当する自動候補表示・シンタックスハイライトをbashでも利用できる
   - zshで使っているSheldonはビルド済みファイルの存在を前提にプラグインを解決するため、ビルドが必要なble.shの管理には向かない。そのためble.shだけは `bootstrap.sh` 内で個別にclone・ビルドしている
   - デフォルトシェルはbashに変更しない。手動で `bash` を起動した場合にのみ有効
+- Gitの設定は「共通設定」と「マシン・個人ごとの設定」の2ファイルに分かれている
+  - `home/.gitconfig`（= `~/.gitconfig`。リポジトリ管理下）：全環境で共通の設定。末尾で `~/.gitconfig.local` を include する
+  - `~/.gitconfig.local`（リポジトリ管理外）：`user.name` / `user.email`、認証ヘルパー、署名鍵などマシンごとに変わる設定
+  - 個人情報をリポジトリ管理下のファイルに書くと、全員のローカルリポジトリが常に dirty になるため分離している
+  - `~/.gitconfig.local` の雛形は `link.sh` が生成する（既存の場合は上書きしない）
+  - include は共通設定の**末尾**に置いているため、`~/.gitconfig.local` 側で共通設定を上書きできる
+  - 共通設定には新しめのGitを前提とする項目（`push.autoSetupRemote` / `merge.conflictstyle = zdiff3` / `rebase.updateRefs` など）を含む。必要バージョンは `home/.gitconfig` のコメントに記載しており、古いGitでは該当項目が無視されるだけで他には影響しない
+- フォントは用途ごとに2種類を使い分ける。OSごとに導入経路が異なるため、追加・変更時は下記を揃える
+  - **FiraCode Nerd Font**：ターミナル用（Alacritty / VSCodeの統合ターミナル）。Nerd Fontの記号を表示するために必要
+    - macOS：`Brewfile` の `cask "font-fira-code-nerd-font"`
+    - Linux：`scripts/defaults.sh`（Homebrewのcaskがフォントに非対応なため nerd-fonts のリリースを直接ダウンロードする）
+    - Windows：`scripts/windows.ps1`（wingetに FiraCode Nerd Font のパッケージが無いため直接ダウンロードする）
+  - **Ricty Diminished**：VSCodeのエディターフォント用（`Brewfile` の `cask "font-ricty-diminished"`）
+  - WSL2 では画面を描画するのが Windows ホスト側のターミナルなので、Linux側のフォントインストールは `defaults.sh` が自動でスキップする
+  - 参照側の設定は `home/.config/alacritty/alacritty.toml` と `config/vscode/settings.json`（`editor.fontFamily` / `terminal.integrated.fontFamily`）
+- Claude Codeのステータスラインは `home/.claude/statusline.sh` が描画する（`home/.claude/settings.json` の `statusLine` から呼ばれる）
+  - 日本語のキーと値で最大4行を表示する
+    1. モデル・思考量・拡張思考・高速モード・出力スタイル
+    2. ディレクトリ・ブランチ・変更行数・経過時間
+    3. コンテキスト（使用率と 使用量/上限）・入力トークン・出力トークン・コスト
+    4. レート上限（5時間・7日間の使用率とリセット時刻）
+  - 4行目はレート上限を取得できるプラン（Claude.ai Pro / Max）で、最初のAPI応答があった後にのみ表示される。思考量・拡張思考・高速モードも値が渡ってこない環境では自動的に省略される
+  - 使用率は70%以上で黄、90%以上で赤に色が変わる
+  - 標準入力のJSONの解析に `jq` を使うため、`Brewfile` / `Brewfile.Linux` に `brew "jq"` を含めている
 
 ### トラブルシューティング
 
@@ -253,11 +307,6 @@ make herdr-plugins
 - **原因**：`bootstrap.sh` はHomebrewが `PATH` 上で見つからない場合、インストール済みかどうかに関わらず再度インストーラーを起動する（Homebrew自体は既にインストール済みなら安全にスキップされるが、その前段の `sudo -v` は毎回実行される）。
 - **対処**：動作上問題はないため、パスワードを再入力すればそのまま進行する。気になる場合は事前に `eval "$(/opt/homebrew/bin/brew shellenv)"` を実行してからセットアップする。
 
-#### `scripts/defaults.sh` で `brew: command not found` になる（想定）
-
-- **原因**：`defaults.sh` はNerd Fontの確認に `brew list` を使用するが、`bootstrap.sh` / `link.sh` と同様に別プロセスとして実行されるため、`PATH` にHomebrewが通っていないと失敗する可能性がある。
-- **対処**：`eval "$(/opt/homebrew/bin/brew shellenv)"` を実行してから `make defaults`（または `make mac`）を再実行する。
-
 #### `mise install` で特定のツールのビルドに失敗する（想定）
 
 - **原因**：`node` などソースビルドが発生するツールは、Xcode Command Line Tools やビルド依存ライブラリが無いと失敗することがある。
@@ -270,10 +319,10 @@ make herdr-plugins
   mise install <tool>@<version> --verbose
   ```
 
-#### 既存の設定ファイルが `.backup` になっている
+#### `make link` で既存の設定ファイルが消える
 
-- **原因**：`link.sh` はシンボリックリンクを作成する際、リンクではない既存ファイルを検出すると `<ファイル名>.backup` として退避してからリンクを貼る仕様になっている（意図しない上書き防止のため）。
-- **対処**：退避された内容が必要な場合は `.backup` ファイルの中身を確認し、必要な設定を移植する。不要であれば削除して問題ない。
+- **原因**：`link.sh` の `link()` は**退避せずに** `rm -rf` してからシンボリックリンクを貼る（mise等が実ファイルを生成してリンクを上書きするケースでも常にリポジトリを正とするため）。リンク対象と同じパスに手元だけの設定があると失われる。
+- **対処**：`make link` を実行する前に、リンク対象（`README` の「ディレクトリ構成」の `home/` 配下）と同じパスに手元固有の設定が無いか確認する。Gitのユーザー情報のようなマシン固有の設定は、リンク対象外の `~/.gitconfig.local` に置く。
 
 #### VSCode拡張機能がインストールされない
 
@@ -284,6 +333,11 @@ make herdr-plugins
 
 - **原因**：`bootstrap.sh` は Google Chrome（macOSは `/Applications/Google Chrome.app`、Linuxは `google-chrome` / `google-chrome-stable` コマンド）が見つかる場合のみ `config/chrome/extensions.json` のWeb Storeページを開く。Brewfileのcask導入直後でインストールが完了していないと検出に失敗することがある。
 - **対処**：Chromeのインストール完了を確認してから `make bootstrap` を再実行する。Chromeは拡張機能をサイレントインストールできないため、開いた各タブで「Chromeに追加」を手動でクリックする必要がある。
+
+#### WSL2 でターミナルのアイコン（Nerd Font の記号）が豆腐になる
+
+- **原因**：WSL2 の画面を描画するのは Windows ホスト側のターミナル（Windows Terminal など）なので、Linux側にフォントを入れても表示には反映されない（`defaults.sh` はWSL2を検出してLinux側のインストールをスキップする）。
+- **対処**：Windows ホスト側で `make windows` を実行して FiraCode Nerd Font を導入し、ターミナルのフォント設定で `FiraCode Nerd Font` を選ぶ。
 
 #### Linux（WSL2含む）でシェルを `zsh` に変更したのに反映されない
 

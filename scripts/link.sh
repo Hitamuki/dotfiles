@@ -22,6 +22,13 @@ detect_os() {
 
 OS=$(detect_os)
 
+# WSL2 判定（WSL特有の分岐に使用する）
+if [ "$OS" = "linux" ] && grep -qi microsoft /proc/version 2>/dev/null; then
+  IS_WSL=1
+else
+  IS_WSL=0
+fi
+
 link() {
   SRC=$1
   DEST=$2
@@ -63,9 +70,40 @@ link "$DOTFILES_SRC/.vimrc" ~/.vimrc
 link "$DOTFILES_SRC/.gitconfig" ~/.gitconfig
 link "$DOTFILES_SRC/.tmux.conf" ~/.tmux.conf
 
+# ------------------------
+# Git のユーザー情報
+# ------------------------
+# 個人情報をリポジトリ管理下に置かないため、~/.gitconfig（= home/.gitconfig）は
+# ~/.gitconfig.local を include するだけにしている。
+# ここではリポジトリ管理外の ~/.gitconfig.local に雛形を生成する（既存なら変更しない）。
+GITCONFIG_LOCAL="$HOME/.gitconfig.local"
+if [ -e "$GITCONFIG_LOCAL" ]; then
+  echo "✅ $GITCONFIG_LOCAL は既に存在するため作成をスキップしました"
+else
+  cat > "$GITCONFIG_LOCAL" <<'GITCONFIG_LOCAL_EOF'
+# ==========================================================
+# Git のマシン・個人ごとの設定
+#
+# このファイルはリポジトリ管理外（dotfiles では追跡しない）。
+# 共通設定は ~/.gitconfig（dotfiles の home/.gitconfig へのリンク）が持ち、
+# その末尾から include している。後から読み込まれるため、
+# ここに書いた設定は共通設定を上書きする。
+#
+# ユーザー情報のほか、マシンによって変わる設定
+# （認証ヘルパー、署名鍵、業務用リポジトリ向けの設定など）もここに書く。
+# ==========================================================
+
+[user]
+  name =
+  email =
+GITCONFIG_LOCAL_EOF
+  echo "📝 $GITCONFIG_LOCAL を作成しました。user.name / user.email を記入してください。"
+fi
+
 # .claude内にcredentialsやsession等のランタイムファイルが生成されるため、設定ファイルのみ個別にシンボリックリンクを作成する
 mkdir -p ~/.claude
 link "$DOTFILES_SRC/.claude/settings.json" ~/.claude/settings.json
+link "$DOTFILES_SRC/.claude/statusline.sh" ~/.claude/statusline.sh
 
 # ------------------------
 # VSCode settings
@@ -75,12 +113,19 @@ VSCODE_SETTINGS_SRC="$DOTFILES_DIR/config/vscode/settings.json"
 if [ "$OS" = "mac" ]; then
   VSCODE_SETTINGS_DEST="$HOME/Library/Application Support/Code/User/settings.json"
 elif [ "$OS" = "linux" ]; then
-  # リモートSSH環境の場合
+  # リモート（WSL2 / SSH）環境の場合
   if [ -d "$HOME/.vscode-server" ]; then
     VSCODE_SETTINGS_DEST="$HOME/.vscode-server/data/Machine/settings.json"
   else
     # ローカルLinuxの場合
     VSCODE_SETTINGS_DEST="$HOME/.config/Code/User/settings.json"
+
+    # ~/.vscode-server は VSCode で初めてリモート接続したときに生成されるため、
+    # WSL2 の初回セットアップでは必ずこちら（ローカルLinux用のパス）が選ばれる
+    if [ "$IS_WSL" = "1" ]; then
+      echo "⚠️  ~/.vscode-server が無いため、VSCode設定をローカルLinux用のパスにリンクしました。"
+      echo "   WSL2 では VSCode から一度 WSL に接続した後、'make link' を再実行してください。"
+    fi
   fi
 fi
 

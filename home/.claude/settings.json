@@ -1,16 +1,5 @@
 {
-  "model": "opus",
-  "effortLevel": "high",
-  "theme": "light-daltonized",
-  "tui": "fullscreen",
-  "preferredNotifChannel": "terminal_bell",
-  "statusLine": {
-    "type": "command",
-    "command": "bash \"$HOME/.claude/statusline.sh\"",
-    "padding": 0
-  },
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Bash(gh:*)",
       "Bash(node:*)",
@@ -36,10 +25,11 @@
       "Bash(file:*)",
       "Bash(env)",
       "mcp__pencil"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus",
   "enableAllProjectMcpServers": true,
-  "enabledPlugins": {},
   "hooks": {
     "Stop": [
       {
@@ -79,5 +69,63 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline.sh\"",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "i-have-adhd@i-have-adhd": true,
+    "mattpocock-skills@mattpocock": true,
+    "show-me@show-me": true,
+    "humanizer@humanizer": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "dietrichgebert/ponytail"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
+    },
+    "mattpocock": {
+      "source": {
+        "source": "github",
+        "repo": "mattpocock/skills"
+      }
+    },
+    "show-me": {
+      "source": {
+        "source": "github",
+        "repo": "charlie947/show-me"
+      }
+    },
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "theme": "light-daltonized",
+  "preferredNotifChannel": "terminal_bell",
+  "skipAutoPermissionPrompt": true
 }

@@ -58,9 +58,7 @@
     "*.copilotmd": "vscode.markdown.preview.editor", // Copilot 生成の Markdown はプレビューで開く
     "{git,gitlens,conflictResolution,vscode-local-history}:/**/*.tc.json": "default", // 差分・ソース管理では .tc.json を標準エディタで開く
     "{git,gitlens,conflictResolution,vscode-local-history}:/**/*.{asl.json,asl.yaml,asl.yml}": "default", // 差分・ソース管理では ASL 定義を標準エディタで開く
-    "*.md": "default", // Markdown は標準エディタで開く
-    "{git,gitlens,conflictResolution,vscode-local-history,git-graph}:/**/*.tsv": "default", // 差分・ソース管理・Git Graph ではビューアを使わず標準テキスト表示にする
-    "*.tsv": "xlsxViewer.tsv" // TSV は xlsx Viewer で開く
+    "*.md": "default" // Markdown は標準エディタで開く
   },
   // ==========================================
   // バージョン管理（Git / SCM）
@@ -118,35 +116,31 @@
     }
   },
   // ==========================================
-  // 拡張機能（Live Share / xlsx Viewer / Marp）
+  // 拡張機能（Live Share / Marp）
   // ==========================================
   "liveshare.allowGuestDebugControl": true, // ゲストにデバッグ操作を許可
   "liveshare.allowGuestTaskControl": true, // ゲストにタスク操作を許可
-  "xlsxViewer.md.stickyToolbar": true, // ツールバーを固定表示
-  "xlsxViewer.md.wordWrap": true, // テキストを折り返す
-  "xlsxViewer.md.syncScroll": true, // エディタとプレビューのスクロールを同期
-  "xlsxViewer.md.previewPosition": "right", // プレビューを右側に表示
-  "xlsxViewer.md.moveMdButtonsToEnd": false, // Markdownボタンを末尾に移動しない
-  "xlsxViewer.md.showOutline": false, // アウトラインを表示しない
-  "xlsxViewer.md.showLineNumbers": true, // 行番号を表示
   "markdown.marp.exportType": "pptx", // Marp のエクスポート形式を PowerPoint にする
-  // ==========================================
-  // リモート・ポート転送
-  // ==========================================
-  "remote.autoForwardPortsSource": "hybrid", // 自動ポートフォワーディングの対象をハイブリッド（プロセスとパターン両方）
   // ==========================================
   // AI
   // ==========================================
   "claudeCode.preferredLocation": "panel", // Claude Code の表示位置をパネルにする
-  "gitlens.ai.vscode.model": "copilotcli:claude-haiku-4.5",
-  "yaml.disableSchemaDetection": [
+  "claudeCode.hideOnboarding": true, // Claude Code のオンボーディングを表示しない
+  "gitlens.ai.vscode.model": "copilotcli:claude-haiku-4.5", // GitLens の AI 機能で使うモデル
+  "chat.instructionsFilesLocations": { // チャットが読み込む指示ファイルの場所
+    ".github/instructions": true,
+    ".claude/rules": true,
+    "~/.copilot/instructions": true,
+    "~/.claude/rules": true
+  },
+  "yaml.disableSchemaDetection": [ // GitHub Actions 等のワークフローYAMLはスキーマ自動判定しない
     "**/.github/workflows/*.yml",
     "**/.github/workflows/*.yaml",
     "**/.gitea/workflows/*.yml",
     "**/.gitea/workflows/*.yaml",
     "**/.forgejo/workflows/*.yml",
     "**/.forgejo/workflows/*.yaml"
-  ] // GitLens の AI 機能で使うモデル
+  ]
   // ==========================================
   // 未設定
   // ==========================================

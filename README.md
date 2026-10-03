@@ -282,17 +282,6 @@ make herdr-plugins
 
 ### トラブルシューティング
 
-#### `make mac` 実行中に `mise: command not found` で失敗する
-
-- **原因**：Homebrew を新規インストールした直後は、同じシェル内では `PATH` に `/opt/homebrew/bin` が反映されていない。そのため `bootstrap.sh` 内の `brew bundle`（`mise` のインストール）が実行されず、後続の `link.sh` が `mise install` に失敗していた。
-- **対処**：本リポジトリの `scripts/bootstrap.sh` / `scripts/link.sh` は既に対策済み（インストール直後に `eval "$(brew shellenv)"` でPATHを通すよう修正済み）。それでも発生する場合は以下を試す。
-
-  ```bash
-  # Homebrew を手動でPATHに通してから再実行
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-  make mac
-  ```
-
 #### Homebrew インストール直後に `brew: command not found` になる
 
 - **原因**：Homebrewのインストーラーは `~/.zprofile` にPATH設定を追記するが、それは**新しいシェルを起動したときにだけ**反映される。インストール直後の同じターミナルには反映されない。
